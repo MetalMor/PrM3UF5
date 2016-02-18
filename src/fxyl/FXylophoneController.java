@@ -25,6 +25,7 @@ import javax.sound.midi.Synthesizer;
 import javax.xml.parsers.ParserConfigurationException;
 import note.Note;
 import note.NoteImpl;
+import note.NoteQueue;
 
 /**
  * Classe controladora del xilòfon.
@@ -118,7 +119,7 @@ public class FXylophoneController implements Initializable {
      * Estructura de dades a on guardar els objectes Note, preparats per ser
      * inserits a un fitxer XML.
      */
-    private static ArrayList<Note> noteRecording;
+    private static NoteQueue<Note> noteRecording;
     /**
      * Botó per reproduir els objectes Note desats a un fitxer XML.
      */
@@ -144,7 +145,7 @@ public class FXylophoneController implements Initializable {
      * Objecte encarregat de gestionar la inserció i extracció d'objectes Note
      * a un fitxer XML.
      */
-    private FXylophoneXML<Note> xmlNoteRecorder;
+    private FXylophoneXML xmlNoteRecorder;
     /**
      * Temps en milisegons que el programa esperarà entre una nota i una altra
      * quan estigui reproduint les dades d'un fitxer XML.
@@ -186,7 +187,7 @@ public class FXylophoneController implements Initializable {
     public void loadButtons() {
 
         fileNameTF.setPromptText(Constants.TF_FILE_PROMPT);
-        setXmlNoteRecorder(new FXylophoneXML<>());
+        setXmlNoteRecorder(new FXylophoneXML());
         
         record.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 
@@ -194,7 +195,7 @@ public class FXylophoneController implements Initializable {
             public void handle(MouseEvent me) {
 
                 if(!isRecording()) {
-                    setNoteRecording(new ArrayList<>());
+                    setNoteRecording(new NoteQueue<>());
                     setRecording(true);
                 }
 
@@ -286,7 +287,7 @@ public class FXylophoneController implements Initializable {
         if(!addKeysToKeyboard())
             throw new MissingKeyboardException();
         
-        setNoteRecording(new ArrayList<>());
+        setNoteRecording(new NoteQueue<>());
         
         for (Rectangle rect : keyboard) {
             rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -322,7 +323,7 @@ public class FXylophoneController implements Initializable {
             noteRecording.add(n);
         }
       
-        mc[4].noteOn(n.getValue(),300);
+        mc[4].noteOn(n.getValue(),Constants.NOTE_VOLUME);
         setKey(0);
         
     }
@@ -340,7 +341,7 @@ public class FXylophoneController implements Initializable {
             System.out.println(recdNote);
             // espera el temps necessari des de l'última nota per reproduïr la següent
             wait(recdNote.getPlayedTime() - getWait());
-            mc[10].noteOn(recdNote.getValue(),300);
+            mc[10].noteOn(recdNote.getValue(),Constants.NOTE_VOLUME);
             setWait(recdNote.getPlayedTime());
         } catch (InterruptedException ex) {
             ex.printStackTrace();
@@ -386,7 +387,7 @@ public class FXylophoneController implements Initializable {
      */
     public void idToKey(String key) throws KeyErrorException {
         
-        int newKey = 2*Integer.parseInt(key) + 90;
+        int newKey = 2*Integer.parseInt(key) + Constants.NOTE_VALUE;
         int oldKey = this.key;
         setKey(newKey);
         
@@ -419,7 +420,7 @@ public class FXylophoneController implements Initializable {
         return noteRecording;
     }
 
-    public FXylophoneXML<Note> getXmlNoteRecorder() {
+    public FXylophoneXML getXmlNoteRecorder() {
         return xmlNoteRecorder;
     }
 
@@ -443,7 +444,7 @@ public class FXylophoneController implements Initializable {
         this.key = key;
     }
 
-    public static void setNoteRecording(ArrayList<Note> noteRecording) {
+    public static void setNoteRecording(NoteQueue<Note> noteRecording) {
         FXylophoneController.noteRecording = noteRecording;
     }
 
@@ -451,7 +452,7 @@ public class FXylophoneController implements Initializable {
         this.recording = recording;
     }
 
-    private void setXmlNoteRecorder(FXylophoneXML<Note> xmlToNote) {
+    private void setXmlNoteRecorder(FXylophoneXML xmlToNote) {
         this.xmlNoteRecorder = xmlToNote;
     }
 

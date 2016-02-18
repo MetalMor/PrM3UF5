@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import note.Note;
 import note.NoteComparator;
 import note.NoteImpl;
+import note.NoteQueue;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,12 +36,10 @@ import org.xml.sax.SAXException;
  * 020216
  * @author mor
  */
-public class FXylophoneXML<T> extends ArrayList {
+public class FXylophoneXML {
     
-    private T t;
-    
-    private List<Note> noteRecording = new ArrayList<>();
-    private List<Note> notePlaying = new ArrayList<>();
+    private List<Note> noteRecording = new NoteQueue<>();
+    private List<Note> notePlaying = new NoteQueue<>();
     private NoteComparator nc = new NoteComparator();
     
     private String fileName;
@@ -56,7 +55,7 @@ public class FXylophoneXML<T> extends ArrayList {
     
     public FXylophoneXML() { }
     
-    public FXylophoneXML(ArrayList<Note> noteRecording) {
+    public FXylophoneXML(NoteQueue<Note> noteRecording) {
         
         this.noteRecording = noteRecording;
         
@@ -74,18 +73,18 @@ public class FXylophoneXML<T> extends ArrayList {
      */
     public Element XMLcreateNoteElement(Note n, Document doc) {
         
-        Element note = doc.createElement("Note");
+        Element note = doc.createElement(Constants.NOTE_ELEMENT);
         
-        System.out.println(Integer.toString(n.getValue()));
-        System.out.println(Long.toString(n.getTimestamp()));
+//        System.out.println(Integer.toString(n.getValue()));
+//        System.out.println(Long.toString(n.getTimestamp()));
         
         /**
          * Elements fills de <Note>
          */
-        Element value = doc.createElement("Value");
+        Element value = doc.createElement(Constants.VALUE_ELEMENT);
         value.appendChild(
                 doc.createTextNode(Integer.toString(n.getValue())));
-        Element timestamp = doc.createElement("Timestamp");
+        Element timestamp = doc.createElement(Constants.TIMESTAMP_ELEMENT);
         timestamp.appendChild(
                 doc.createTextNode(Long.toString(n.getTimestamp())));
         
@@ -114,7 +113,7 @@ public class FXylophoneXML<T> extends ArrayList {
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         
         Document docNode = docBuilder.newDocument();
-        Element rootElement = docNode.createElement("SoundFile");
+        Element rootElement = docNode.createElement(Constants.SOUNDFILE_ELEMENT);
         docNode.appendChild(rootElement);
         
         for (Note note : noteRecording) {
@@ -162,7 +161,7 @@ public class FXylophoneXML<T> extends ArrayList {
         Document doc = dBuilder.parse(midiXml);
         doc.getDocumentElement().normalize();
 
-        NodeList nodes = doc.getElementsByTagName("Note");
+        NodeList nodes = doc.getElementsByTagName(Constants.NOTE_ELEMENT);
         
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
@@ -171,8 +170,8 @@ public class FXylophoneXML<T> extends ArrayList {
                 
                 Element element = (Element) node;
                 Note noteToPlay = new NoteImpl(
-                        Integer.parseInt(getContent("Value", element)),
-                        Long.parseLong(getContent("Timestamp", element))
+                        Integer.parseInt(getContent(Constants.VALUE_ELEMENT, element)),
+                        Long.parseLong(getContent(Constants.TIMESTAMP_ELEMENT, element))
                 );
                 
                 if(!recordNote(noteToPlay))
@@ -194,7 +193,7 @@ public class FXylophoneXML<T> extends ArrayList {
      * Funció per recuperar el valor d'un node XML.
      * 
      * @param etiqueta Node que desitgem extreure de l'XML.
-     * @param element Element a on cercar el node.
+     * @param element Element a on cercar el node
      * @return El valor del node en forma de String.
      */
     private static String getContent(String etiqueta, Element element) {
@@ -203,11 +202,8 @@ public class FXylophoneXML<T> extends ArrayList {
         return node.getNodeValue();
     }
     
-    public void setT(T t) {
-        this.t = t;
-    }
-
-    public void setNoteRecording(ArrayList<Note> noteRecording) {
+  
+    public void setNoteRecording(NoteQueue<Note> noteRecording) {
         this.noteRecording = noteRecording;
     }
 
@@ -223,9 +219,7 @@ public class FXylophoneXML<T> extends ArrayList {
         this.fileName = fileName + Constants.EXT;
     }
     
-    public T getT() {
-        return t;
-    }
+
 
     public List<Note> getNoteRecording() {
         return noteRecording;

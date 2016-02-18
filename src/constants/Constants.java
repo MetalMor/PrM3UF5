@@ -57,6 +57,11 @@ public class Constants {
      * Extensió per al fitxer que guarda la grabació.
      */
     public static final String EXT = ".xml";
+   
+    /**
+     * Element arrel del fitxer xml.
+     */
+    public static final String SOUNDFILE_ELEMENT = "SoundFile";
     
     /**
      * Element corresponent a un objecte de classe Note.
@@ -86,4 +91,13 @@ public class Constants {
      */
     public static final int INSTRUMENT = 13; // xilòfon -> 13
     
+    /**
+     * To de les notes.
+     */
+    public static final int NOTE_VALUE = 85;
+    
+    /**
+     * Volum de les notes.
+     */
+    public static final int NOTE_VOLUME = 300;
 }

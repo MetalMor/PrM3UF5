@@ -13,11 +13,54 @@ Rectangle {
 }
 
 Rectangle#1 {
-    -fx-fill: #FF0000;
+    -fx-fill: #ff0000;
 }
 
-Rectangle:hover { 
-    
+Rectangle#2 {
+    -fx-fill: #ff3d00;
+}
+
+Rectangle#3 {
+    -fx-fill:#ff7a00;
+}
+
+Rectangle#4{
+    -fx-fill: #ffb800;
+}
+
+Rectangle#5 {
+    -fx-fill: #ccff00;
+}
+
+Rectangle#6 {
+    -fx-fill:#14ff00;
+}
+
+Rectangle#7 {
+    -fx-fill: #00ff66;
+}
+
+Rectangle#8 {
+    -fx-fill:#66edff;
+}
+
+Rectangle#9 {
+    -fx-fill: #0066ff;
+}
+
+Rectangle#10 {
+    -fx-fill: #8f00ff;
+}
+
+Rectangle#11 {
+    -fx-fill: #cc00c4;
+}
+
+Rectangle#12 {
+    -fx-fill: #fff966;
+}
+
+Rectangle:hover {
     -fx-cursor: hand;
     -fx-opacity: 1.0;
 }
@@ -28,3 +71,18 @@ Rectangle:pressed{
     
 }
 
+Circle {
+    -fx-fill: #808080;
+    -fx-stroke-type: inside;
+    -fx-stroke: #000000;
+}
+
+Circle#keyboard:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 1.0;
+}
+
+Circle#keyboard:pressed{
+    -fx-stroke-type: inside;
+    -fx-stroke-width: 3;
+}
