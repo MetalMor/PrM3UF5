@@ -1,8 +1,7 @@
 package exc;
 
 /**
- * Classe que hereta d'Exception per tractar errors de recuperació dels valors
- * de cada tecla.
+ * Excepció per tractar errors de recuperació dels valors de cada tecla.
  *
  * 010216
  * @author mor

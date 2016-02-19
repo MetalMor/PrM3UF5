@@ -10,6 +10,7 @@ package constants;
  */
 public class Constants {
     
+    //<editor-fold defaultstate="collapsed" desc="Valors necessaris per inicialitzar l'aplicació.">
     /**
      * Amplada de la finestra.
      */
@@ -29,19 +30,9 @@ public class Constants {
      * Nom del fitxer que guarda la vista.
      */
     public static final String VIEW_FILE = "FXylophoneView.fxml";
+    //</editor-fold>
     
-    /**
-     * Nom del fitxer d'estils. S'ha deixat d'utilitzar perquè el fitxer 
-     * d'estils s'inclou a la vista
-     */
-    public static final String STYLESHEET = "style.css";
-    
-    /**
-     * Text per mostrar al TextField a on introduir el nom del fitxer XML per
-     * guardar cadascun dels objectes Note.
-     */
-    public static final String TF_FILE_PROMPT = "Fitxer...";
-    
+    //<editor-fold defaultstate="collapsed" desc="Constants per a l'ús de fitxers XML.">
     /**
      * Nom per defecte del fitxer XML a on guardar els objectes Note.
      */
@@ -57,7 +48,7 @@ public class Constants {
      * Extensió per al fitxer que guarda la grabació.
      */
     public static final String EXT = ".xml";
-   
+    
     /**
      * Element arrel del fitxer xml.
      */
@@ -69,7 +60,7 @@ public class Constants {
     public static final String NOTE_ELEMENT = "Note";
     
     /**
-     * Element corresponent a l'atribut value d'un objecte de classe 
+     * Element corresponent a l'atribut value d'un objecte de classe
      * Note.
      */
     public static final String VALUE_ELEMENT = "Value";
@@ -79,25 +70,19 @@ public class Constants {
      * Note.
      */
     public static final String TIMESTAMP_ELEMENT = "Timestamp";
+    //</editor-fold>
     
-    /**
-     * Temps en milisegons del moment de l'execució del programa.
-     */
-    public static final long CURRENT_TIME_MILLIS = System.currentTimeMillis();
-    
-    /**
-     * Codi integer per obtenir l'instrument del soundbank. No sembla que 
-     * funcioni, sempre sona el p*** piano.
-     */
-    public static final int INSTRUMENT = 13; // xilòfon -> 13
-    
-    /**
-     * To de les notes.
-     */
-    public static final int NOTE_VALUE = 85;
-    
+    //<editor-fold defaultstate="collapsed" desc="Misc.">
     /**
      * Volum de les notes.
      */
-    public static final int NOTE_VOLUME = 300;
+    public static final int VOLUME = 300;
+    
+    /**
+     * Text per mostrar al TextField a on introduir el nom del fitxer XML per
+     * guardar cadascun dels objectes Note.
+     */
+    public static final String TF_FILE_PROMPT = "Fitxer...";
+    //</editor-fold>
+    
 }

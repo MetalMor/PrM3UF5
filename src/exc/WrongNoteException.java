@@ -1,8 +1,8 @@
 package exc;
 
 /**
- * Classe que hereta d'Exception per controlar errors amb la transferència
- * d'objectes Note del programa a un fitxer XML i viceversa.
+ * Excepció per controlar errors amb la transferència d'objectes Note del 
+ * programa a un fitxer XML i al revés.
  *
  * 020216
  * @author mor

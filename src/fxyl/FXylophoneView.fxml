@@ -64,63 +64,63 @@
                fill="#fff966" height="221.0" 
                layoutX="472.0" layoutY="54.0" width="40.0" />
     
-    <Circle id="keyboard" fill="#808080" layoutX="52.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="52.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="92.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="92.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="132.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="132.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="172.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="172.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="212.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="212.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="252.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="252.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="292.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="292.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="332.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="332.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="372.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="372.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="412.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="412.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="450.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="450.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="490.0" layoutY="83.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="490.0" layoutY="83.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="52.0" layoutY="400.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="52.0" layoutY="400.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="92.0" layoutY="384.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="92.0" layoutY="384.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="132.0" layoutY="367.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="132.0" layoutY="367.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="172.0" layoutY="351.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="172.0" layoutY="351.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="212.0" layoutY="335.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="212.0" layoutY="335.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="252.0" layoutY="319.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="252.0" layoutY="319.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="292.0" layoutY="303.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="292.0" layoutY="303.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="332.0" layoutY="287.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="332.0" layoutY="287.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="372.0" layoutY="271.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="372.0" layoutY="271.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="412.0" layoutY="255.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="412.0" layoutY="255.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="450.0" layoutY="239.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="450.0" layoutY="239.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" />
-    <Circle id="keyboard" fill="#808080" layoutX="490.0" layoutY="223.0" radius="8.125" 
+    <Circle fill="#808080" layoutX="490.0" layoutY="223.0" radius="8.125" 
             stroke="BLACK" strokeType="INSIDE" /> 
     
     <!-- 
             CONTROL DE GRABACIÓ:
             Botons per controlar la grabació i reproducció d'un fitxer XML.
             -->
-    <javafx.scene.control.Button fx:id="record" text="Grabar" />
-      <Button fx:id="play" layoutX="158.0" text="Reproduir" />
+      <Button fx:id="record" text="Grabar" />
+      <Button fx:id="play" layoutX="200.0" text="Reproduir" />
       <Button fx:id="stopRecord" layoutX="64.0" text="Acabar grabació" />
-      <TextField fx:id="fileNameTF" layoutX="224.0" />
+      <TextField fx:id="fileNameTF" layoutX="300.0" />
   </children>
   
   <effect>

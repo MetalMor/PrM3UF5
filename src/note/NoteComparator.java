@@ -12,6 +12,15 @@ import java.util.Comparator;
  */
 public class NoteComparator implements Comparator {
 
+    //<editor-fold defaultstate="collapsed" desc="Overrides.">
+    /**
+     * Compara objectes de la classe Note a partir del seu mètode compareTo.
+     *
+     * @param n1 Objecte de la classe Note.
+     * @param n2 Objecte de la classe Note.
+     * @return Negatiu si el primer va abans, positiu si va després o zero si
+     * són iguals (cosa impossible, per cert).
+     */
     @Override
     public int compare(Object n1, Object n2) {
         
@@ -20,14 +29,7 @@ public class NoteComparator implements Comparator {
         
         return note1.compareTo(note2);
         
-//        if (note1.compareTo(note2) < 0)
-//            return -1;
-//        
-//        else if (note1.compareTo(note2) > 0)
-//            return 1;
-//        
-//        return 0;
-        
     }
+    //</editor-fold>
     
 }

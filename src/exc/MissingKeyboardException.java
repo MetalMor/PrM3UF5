@@ -1,7 +1,7 @@
 package exc;
 
 /**
- * Classe que hereta d'Exception per gestionar errors amb el teclat virtual.
+ * Excepció per gestionar errors amb el teclat virtual.
  *
  * 010216
  * @author mor

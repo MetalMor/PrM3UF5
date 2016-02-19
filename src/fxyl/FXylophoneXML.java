@@ -1,10 +1,10 @@
 package fxyl;
 
+//<editor-fold defaultstate="collapsed" desc="Imports.">
 import constants.Constants;
 import exc.WrongNoteException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,60 +23,60 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+//</editor-fold>
 
 /**
- * Classe parametritzada (que podria no ser-ho) que implementa la inserció i
- * extracció d'objectes Note a un fitxer XML.
- * 
- * Help: http://java.sys-con.com/node/37803
- * 
- * EN PROCESO CHAVALES, NO SÉ SI ESTO SERÁ ÚTIL PERO IMPLEMENTA VARIOS
- * REQUISITOS DE LA APLICACIÓN
+ * Classe que implementa la inserció i extracció d'objectes Note a un fitxer 
+ * XML. 
  *
  * 020216
  * @author mor
  */
 public class FXylophoneXML {
     
-    private List<Note> noteRecording = new NoteQueue<>();
-    private List<Note> notePlaying = new NoteQueue<>();
+    // PROPIETATS
+    
+    //<editor-fold defaultstate="collapsed" desc="Propietats.">
+    /**
+     * Estructura de dades per guardar temporalment objectes Note en el procés
+     * de grabació/extracció de notes.
+     */
+    private List<Note> noteList = new NoteQueue<>();
+    /**
+     * Objecte que implementa Comparator per ordenar adequadament, segons
+     * el seu timestamp, els objectes Note a la seva estructura de dades.
+     */
     private NoteComparator nc = new NoteComparator();
-    
+    /**
+     * Nom del fitxer xml en el qual es guardaran les dades dels objectes
+     * Note (sense extensió!).
+     */
     private String fileName;
+    //</editor-fold>
     
-    public boolean recordNote(Note n) {
-        
-        if(!noteRecording.add(n))
-            return false;
-        
-        return true;
-        
-    }
+    // MÈTODES
     
+    //<editor-fold defaultstate="collapsed" desc="Constructors.">
+    /**
+     * Constructor sense arguments.
+     */
     public FXylophoneXML() { }
+//</editor-fold>
     
-    public FXylophoneXML(NoteQueue<Note> noteRecording) {
-        
-        this.noteRecording = noteRecording;
-        
-    }
-    
+    //<editor-fold defaultstate="collapsed" desc="Mètodes Note -> XML.">
     /**
      * Funció que construeix un element <Note>.
      * Per tal de poder guardar les dades dels missatges MIDI a un XML, cal
-     * convertir-les a un format XML. Aquesta funció s'encarrega de crear un 
+     * convertir-les a un format XML. Aquesta funció s'encarrega de crear un
      * element XML a partir d'una nota enviat per paràmetre.
-     * 
-     * @param n Nota de MIDI.
+     *
+     * @param n Objecte de la classe Note.
      * @param doc Objecte Document al qual s'afegeix l'element.
      * @return Element
      */
     public Element XMLcreateNoteElement(Note n, Document doc) {
         
         Element note = doc.createElement(Constants.NOTE_ELEMENT);
-        
-//        System.out.println(Integer.toString(n.getValue()));
-//        System.out.println(Long.toString(n.getTimestamp()));
         
         /**
          * Elements fills de <Note>
@@ -92,22 +92,22 @@ public class FXylophoneXML {
         note.appendChild(timestamp);
         
         return note;
-            
+        
     }
     
     /**
      * Funció Note -> XML.
-     * Guarda les dades d'un conjunt d'objectes Note en un document XML 
+     * Guarda les dades d'un conjunt d'objectes Note en un document XML
      * utilitzant l'API DOM.
-     * 
+     *
      * @throws ParserConfigurationException
      * @throws WrongNoteException
-     * @throws TransformerException 
+     * @throws TransformerException
      */
-    public void notesToXML() throws ParserConfigurationException, 
+    public void notesToXML() throws ParserConfigurationException,
             WrongNoteException, TransformerException {
         
-        noteRecording.sort(nc);
+        noteList.sort(nc);
         
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -116,7 +116,7 @@ public class FXylophoneXML {
         Element rootElement = docNode.createElement(Constants.SOUNDFILE_ELEMENT);
         docNode.appendChild(rootElement);
         
-        for (Note note : noteRecording) {
+        for (Note note : noteList) {
             
             /**
              * Si no és una nota de MIDI, llença una excepció.
@@ -136,8 +136,21 @@ public class FXylophoneXML {
         Transformer transf = tf.newTransformer();
         DOMSource orig = new DOMSource(docNode);
         StreamResult outXML = new StreamResult(new File(this.fileName));
-
+        
         transf.transform(orig, outXML);
+        
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Mètodes XML -> Note.">
+    public boolean recordNote(Note n) {
+        
+        System.out.println("XMLtoNote");
+        System.out.println(n);
+        if(!noteList.add(n))
+            return false;
+        
+        return true;
         
     }
     
@@ -180,12 +193,12 @@ public class FXylophoneXML {
             }
         }
         
-        notePlaying.sort(nc);
+        noteList.sort(nc);
         
-        for (Note note : notePlaying)
+        for (Note note : noteList)
             System.out.println(note);
         
-        return notePlaying;
+        return noteList;
         
     }
     
@@ -201,40 +214,63 @@ public class FXylophoneXML {
         Node node = (Node) nodes.item(0);
         return node.getNodeValue();
     }
+    //</editor-fold>
     
-  
-    public void setNoteRecording(NoteQueue<Note> noteRecording) {
-        this.noteRecording = noteRecording;
-    }
-
-    public void setNotePlaying(List<Note> notePlaying) {
-        this.notePlaying = notePlaying;
-    }
-
-    public void setNc(NoteComparator nc) {
-        this.nc = nc;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName + Constants.EXT;
-    }
-    
-
-
+    //<editor-fold defaultstate="collapsed" desc="Getters i setters">
+    /**
+     * Retorna l'estructura de dades que guarda objectes Note per grabar i
+     * reproduir.
+     * 
+     * @return Llista d'objectes de la classe Note.
+     */
     public List<Note> getNoteRecording() {
-        return noteRecording;
+        return noteList;
     }
-
-    public List<Note> getNotePlaying() {
-        return notePlaying;
-    }
-
+    
+    /**
+     * Retorna el comparador d'objectes Note.
+     * 
+     * @return Objecte que implementa Comparator.
+     */
     public NoteComparator getNc() {
         return nc;
     }
-
+    
+    /**
+     * Retorna el nom del fitxer per guardar/reproduir.
+     * 
+     * @return String del nom del fitxer XML (sense extensió).
+     */
     public String getFileName() {
         return fileName;
     }
+    
+    /**
+     * Defineix l'objecte llista de notes.
+     * 
+     * @param noteRecording Llista d'objectes de la classe Note.
+     */
+    public void setNoteRecording(NoteQueue<Note> noteRecording) {
+        this.noteList = noteRecording;
+    }
+    
+    /**
+     * Defineix el comparador d'objectes Note.
+     * 
+     * @param nc Objecte que implementa Comparator.
+     */
+    public void setNc(NoteComparator nc) {
+        this.nc = nc;
+    }
+    
+    /**
+     * Defineix el nom del fitxer per guardar/reproduir notes.
+     * 
+     * @param fileName String del nom del fitxer XML (sense extensió).
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName + Constants.EXT;
+    }
+    //</editor-fold>
     
 }
