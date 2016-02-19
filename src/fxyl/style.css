@@ -1,0 +1,30 @@
+/* 
+    Created on : 04-feb-2016, 16:22:48
+    Author     : Edgar Ben
+*/
+
+Rectangle {
+    -fx-arc-height: 5.0;
+    -fx-arc-width: 5.0;
+    -fx-opacity: 0.7;
+    -fx-stroke: BLACK;
+    -fx-stroke-type: outside;
+    -fx-stroke-width: 1;
+}
+
+Rectangle#1 {
+    -fx-fill: #FF0000;
+}
+
+Rectangle:hover { 
+    
+    -fx-cursor: hand;
+    -fx-opacity: 1.0;
+}
+
+Rectangle:pressed{
+    -fx-stroke-type: inside;
+    -fx-stroke-width: 3;
+    
+}
+
