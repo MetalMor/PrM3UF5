@@ -383,11 +383,8 @@ public class FXylophoneController implements Initializable {
         try {
             NoteQueue<Note> noteList = (NoteQueue<Note>) xmlNoteRecorder.XMLtoNotes();
             setNoteList(noteList);
-            for (Note note : getNoteList()) {
-                System.out.println("play handle");
-                System.out.println(note);
+            for (Note note : getNoteList())
                 playRecordedNote(note);
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -429,7 +426,7 @@ public class FXylophoneController implements Initializable {
             System.out.println(recdNote);
             
             // espera el temps necessari des de l'última nota per reproduïr la següent
-            long playedTime = recdNote.getTimestamp()+ 1;
+            long playedTime = recdNote.getTimestamp() + 1;
             long timeSleep = playedTime - getWait();
             int noteValue = recdNote.getValue();
             
