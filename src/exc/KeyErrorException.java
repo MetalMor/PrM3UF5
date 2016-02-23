@@ -3,7 +3,7 @@ package exc;
 /**
  * Excepció per tractar errors de recuperació dels valors de cada tecla.
  *
- * @version @version 010216
+ * @version 010216
  * @author mor
  */
 public class KeyErrorException extends Exception {
