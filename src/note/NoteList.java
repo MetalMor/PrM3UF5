@@ -11,7 +11,7 @@ import java.util.Collection;
  * 
  * @author Edgar Ben
  */
-public class NoteQueue<T> extends ArrayList {
+public class NoteList<T> extends ArrayList {
 
     // PROPIETATS
     
@@ -30,14 +30,14 @@ public class NoteQueue<T> extends ArrayList {
      * 
      * @param initialCapacity Valor integer del límit en el nombre d'elements.
      */
-    public NoteQueue(int initialCapacity) {
+    public NoteList(int initialCapacity) {
         super(initialCapacity);
     }
 
     /**
      * Constructor sense arguments.
      */
-    public NoteQueue() {
+    public NoteList() {
     }
 
     /**
@@ -45,7 +45,7 @@ public class NoteQueue<T> extends ArrayList {
      * 
      * @param c Objecte que implementa la interfície Collection.
      */
-    public NoteQueue(Collection c) {
+    public NoteList(Collection c) {
         super(c);
     }
     //</editor-fold>

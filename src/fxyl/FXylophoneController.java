@@ -22,9 +22,8 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 import note.Note;
 import note.NoteImpl;
-import note.NoteQueue;
+import note.NoteList;
 //</editor-fold>
-
 /**
  * Classe controladora del xilòfon.
  * Realitza les tasques relacionades amb la comunicació amb l'usuari per al
@@ -119,7 +118,7 @@ public class FXylophoneController implements Initializable {
      * Estructura de dades a on guardar els objectes Note, preparats per ser
      * inserits a un fitxer XML.
      */
-    private static NoteQueue<Note> noteList;
+    private static NoteList<Note> noteList;
     /**
      * Propietat que allotja temporalment el valor de la nota per reproduir-la.
      */
@@ -170,8 +169,9 @@ public class FXylophoneController implements Initializable {
     
     //<editor-fold defaultstate="collapsed" desc="Inicialització del controlador i la interfície de l'usuari.">
     /**
-     * Inicialització.
-     * Inicialitza el controlador amb els requeriments de l'API de MIDI.
+     * Inicialització de la classe controladora.
+     * Inicialitza el controlador amb els requeriments de l'aplicació i l'API 
+     * de MIDI.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -224,14 +224,15 @@ public class FXylophoneController implements Initializable {
      * Carrega els objectes que formen part del teclat a la propietat keyboard
      * en forma d'una estructura de dades de tipus ArrayList.
      *
-     * @throws exc.MissingKeyboardException
+     * @throws exc.MissingKeyboardException en cas que hi hagi un error a l'hora
+     * de vincular els diferents objectes del teclat.
      */
     public void loadKeyBoard() throws MissingKeyboardException {
         
         if(!addKeysToKeyboard())
             throw new MissingKeyboardException();
         
-        setNoteList(new NoteQueue<>());
+        setNoteList(new NoteList<>());
         
         for (Rectangle rect : keyboard) {
             rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -271,7 +272,7 @@ public class FXylophoneController implements Initializable {
                 if(!isRecording()) {
                     long now = System.currentTimeMillis();
                     setRecordTime(now);
-                    setNoteList(new NoteQueue<>());
+                    setNoteList(new NoteList<>());
                     setRecording(true);
                 }
                 
@@ -340,8 +341,9 @@ public class FXylophoneController implements Initializable {
      * en aquesta funció, el valor de la nota canvia de forma
      * segura. En cas que no hagi canviat adequadament, llença una excepció.
      *
-     * @param key La nova nota per enregistrar.
-     * @throws KeyErrorException
+     * @param key La nova nota a enregistrar.
+     * @throws KeyErrorException si hi ha problemes enregistrant el valor de les
+     * notes.
      */
     public void idToKey(String key) throws KeyErrorException {
         
@@ -359,7 +361,7 @@ public class FXylophoneController implements Initializable {
      * Reprodueix una nota pel canal 10 i desa les seves propietats
      * (moment i to) en un objecte de la classe Note.
      * En cas d'estar el programa en procés de grabació, afegeix la nota
-     * reproduïda a una estructura de dades ArrayList.
+     * reproduïda a una estructura de dades NoteQueue.
      */
     public void playNote() {
         
@@ -369,19 +371,19 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        mc[4].noteOn(n.getValue(),Constants.VOLUME);
+        mc[4].noteOn(n.getValue(), Constants.VOLUME);
         setKey(0);
         
     }
     
     /**
-     * Funció que itera la llista extreta del fitxer XML. Guarda la llista com
-     * a propietat i envia per paràmetre cadascun dels camps de la llista a la
-     * funció playRecordedNote.
+     * Funció que itera la llista de notes extreta del fitxer XML. Guarda la 
+     * llista com a propietat i envia per paràmetre cadascun dels camps de la 
+     * llista a la funció playRecordedNote.
      */
     private void playNotesFromXMLList() {
         try {
-            NoteQueue<Note> noteList = (NoteQueue<Note>) xmlNoteRecorder.XMLtoNotes();
+            NoteList<Note> noteList = (NoteList<Note>) xmlNoteRecorder.XMLtoNotes();
             setNoteList(noteList);
             for (Note note : getNoteList())
                 playRecordedNote(note);
@@ -419,7 +421,7 @@ public class FXylophoneController implements Initializable {
      * nota i fa esperar l'aplicació per tal de mantenir la coherència de la
      * grabació.
      *
-     * @param recdNote Nota extreta del fitxer XML.
+     * @param recdNote Nota a reproduir, extreta del fitxer XML.
      */
     public void playRecordedNote(Note recdNote) {
         try {
@@ -581,7 +583,7 @@ public class FXylophoneController implements Initializable {
      * @param noteRecording Estructura de dades List d'objectes de la classe
      * Note.
      */
-    public static void setNoteList(NoteQueue<Note> noteRecording) {
+    public static void setNoteList(NoteList<Note> noteRecording) {
         FXylophoneController.noteList = noteRecording;
     }
     

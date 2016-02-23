@@ -1,7 +1,7 @@
 package constants;
 
 /**
- * Classe per agrupar les constants necessàries per al funcionament del 
+ * Classe per agrupar les constants útils per al funcionament del 
  * projecte.
  * 
  *

@@ -17,7 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import note.Note;
 import note.NoteComparator;
 import note.NoteImpl;
-import note.NoteQueue;
+import note.NoteList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,7 +41,7 @@ public class FXylophoneXML {
      * Estructura de dades per guardar temporalment objectes Note en el procés
      * de grabació/extracció de notes.
      */
-    private List<Note> noteList = new NoteQueue<>();
+    private List<Note> noteList = new NoteList<>();
     /**
      * Objecte que implementa Comparator per ordenar adequadament, segons
      * el seu timestamp, els objectes Note a la seva estructura de dades.
@@ -65,7 +65,7 @@ public class FXylophoneXML {
     
     //<editor-fold defaultstate="collapsed" desc="Mètodes Note -> XML.">
     /**
-     * Funció que construeix un element <Note>.
+     * Funció que construeix un element Note.
      * Per tal de poder guardar les dades dels missatges MIDI a un XML, cal
      * convertir-les a un format XML. Aquesta funció s'encarrega de crear un
      * element XML a partir d'una nota enviat per paràmetre.
@@ -96,13 +96,15 @@ public class FXylophoneXML {
     }
     
     /**
-     * Funció Note -> XML.
+     * Funció Note a XML.
      * Guarda les dades d'un conjunt d'objectes Note en un document XML
      * utilitzant l'API DOM.
      *
-     * @throws ParserConfigurationException
-     * @throws WrongNoteException
-     * @throws TransformerException
+     * @throws ParserConfigurationException en cas d'error de configuració.
+     * @throws WrongNoteException en cas de trobar una incoherència en un 
+     * objecte Note.
+     * @throws TransformerException en cas de trobar problemes durant la
+     * transformació en un document XML.
      */
     public void notesToXML() throws ParserConfigurationException,
             WrongNoteException, TransformerException {
@@ -159,11 +161,13 @@ public class FXylophoneXML {
      * Per reproduir les notes guardades a un arxiu XML s'han de desar en una
      * llista d'objectes Note.
      * 
-     * @return
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
-     * @throws WrongNoteException 
+     * @return La llista d'objectes de la classe Note construits a partir de les
+     * dades d'un fitxer XML.
+     * @throws IOException si hi ha un error d'entrada/sortida de dades.
+     * @throws SAXException si hi ha un error amb l'API SAX.
+     * @throws ParserConfigurationException en cas d'error de configuració.
+     * @throws WrongNoteException en cas de trobar una incoherència en un 
+     * objecte Note.
      */
     public List<Note> XMLtoNotes() throws IOException, SAXException, 
             ParserConfigurationException, WrongNoteException {
@@ -250,7 +254,7 @@ public class FXylophoneXML {
      * 
      * @param noteRecording Llista d'objectes de la classe Note.
      */
-    public void setNoteRecording(NoteQueue<Note> noteRecording) {
+    public void setNoteRecording(NoteList<Note> noteRecording) {
         this.noteList = noteRecording;
     }
     
