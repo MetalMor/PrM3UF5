@@ -8,7 +8,7 @@ package constants;
  * @version 030216
  * @author mor
  */
-public class Constants {
+public class ApplicationConstants {
     
     //<editor-fold defaultstate="collapsed" desc="Valors necessaris per inicialitzar l'aplicació.">
     /**
@@ -45,7 +45,7 @@ public class Constants {
     public static final String VOID_STRING = "";
     
     /**
-     * Extensió per al fitxer que guarda la grabació.
+     * Extensió per al fitxer que guarda la gravació.
      */
     public static final String EXT = ".xml";
     
@@ -76,7 +76,12 @@ public class Constants {
     /**
      * Volum de les notes.
      */
-    public static final int VOLUME = 300;
+    public static final int DEF_NOTE_VOLUME = 300;
+    
+    /**
+     * To mínim per defecte de les notes.
+     */
+    public static final int DEF_NOTE_VALUE = 90;
     
     /**
      * Text per mostrar al TextField a on introduir el nom del fitxer XML per

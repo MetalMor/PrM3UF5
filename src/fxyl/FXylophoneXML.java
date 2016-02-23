@@ -1,7 +1,7 @@
 package fxyl;
 
 //<editor-fold defaultstate="collapsed" desc="Imports.">
-import constants.Constants;
+import constants.ApplicationConstants;
 import exc.WrongNoteException;
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class FXylophoneXML {
     //<editor-fold defaultstate="collapsed" desc="Propietats.">
     /**
      * Estructura de dades per guardar temporalment objectes Note en el procés
-     * de grabació/extracció de notes.
+     * de gravació/extracció de notes.
      */
     private List<Note> noteList = new NoteList<>();
     /**
@@ -76,15 +76,15 @@ public class FXylophoneXML {
      */
     public Element XMLcreateNoteElement(Note n, Document doc) {
 
-        Element note = doc.createElement(Constants.NOTE_ELEMENT);
+        Element note = doc.createElement(ApplicationConstants.NOTE_ELEMENT);
 
         /**
          * Elements fills de <Note>
          */
-        Element value = doc.createElement(Constants.VALUE_ELEMENT);
+        Element value = doc.createElement(ApplicationConstants.VALUE_ELEMENT);
         value.appendChild(
                 doc.createTextNode(Integer.toString(n.getValue())));
-        Element timestamp = doc.createElement(Constants.TIMESTAMP_ELEMENT);
+        Element timestamp = doc.createElement(ApplicationConstants.TIMESTAMP_ELEMENT);
         timestamp.appendChild(
                 doc.createTextNode(Long.toString(n.getTimestamp())));
 
@@ -115,7 +115,7 @@ public class FXylophoneXML {
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
         Document docNode = docBuilder.newDocument();
-        Element rootElement = docNode.createElement(Constants.SOUNDFILE_ELEMENT);
+        Element rootElement = docNode.createElement(ApplicationConstants.SOUNDFILE_ELEMENT);
         docNode.appendChild(rootElement);
 
         for (Note note : noteList) {
@@ -178,7 +178,7 @@ public class FXylophoneXML {
         Document doc = dBuilder.parse(midiXml);
         doc.getDocumentElement().normalize();
 
-        NodeList nodes = doc.getElementsByTagName(Constants.NOTE_ELEMENT);
+        NodeList nodes = doc.getElementsByTagName(ApplicationConstants.NOTE_ELEMENT);
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
@@ -187,8 +187,8 @@ public class FXylophoneXML {
 
                 Element element = (Element) node;
                 Note noteToPlay = new NoteImpl(
-                        Integer.parseInt(getContent(Constants.VALUE_ELEMENT, element)),
-                        Long.parseLong(getContent(Constants.TIMESTAMP_ELEMENT, element))
+                        Integer.parseInt(getContent(ApplicationConstants.VALUE_ELEMENT, element)),
+                        Long.parseLong(getContent(ApplicationConstants.TIMESTAMP_ELEMENT, element))
                 );
 
                 if(!recordNote(noteToPlay))
@@ -222,7 +222,7 @@ public class FXylophoneXML {
 
     //<editor-fold defaultstate="collapsed" desc="Getters i setters">
     /**
-     * Retorna l'estructura de dades que guarda objectes Note per grabar i
+     * Retorna l'estructura de dades que guarda objectes Note per gravar i
      * reproduir.
      *
      * @return Llista d'objectes de la classe Note.
@@ -273,7 +273,7 @@ public class FXylophoneXML {
      * @param fileName String del nom del fitxer XML (sense extensió).
      */
     public void setFileName(String fileName) {
-        this.fileName = fileName + Constants.EXT;
+        this.fileName = fileName + ApplicationConstants.EXT;
     }
     //</editor-fold>
 

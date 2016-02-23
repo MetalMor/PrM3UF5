@@ -1,7 +1,7 @@
 package fxyl;
 
 //<editor-fold defaultstate="collapsed" desc="Imports.">
-import constants.Constants;
+import constants.ApplicationConstants;
 import exc.InvalidFileNameException;
 import exc.KeyErrorException;
 import exc.MissingKeyboardException;
@@ -15,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -110,7 +112,7 @@ public class FXylophoneController implements Initializable {
     @FXML private Rectangle rect12;
     //</editor-fold>
     
-    //<editor-fold defaultstate="collapsed" desc="Propietats de control de grabació/reproducció.">
+    //<editor-fold defaultstate="collapsed" desc="Propietats de control de gravació/reproducció.">
     /**
      * Objecte encarregat de gestionar la inserció i extracció d'objectes Note
      * a un fitxer XML.
@@ -131,11 +133,11 @@ public class FXylophoneController implements Initializable {
      */
     private long wait = 0;
     /**
-     * Flag per indicar si el programa està grabant.
+     * Flag per indicar si el programa està gravant.
      */
     private boolean recording = false;
     /**
-     * Moment de l'inici de la grabació.
+     * Moment de l'inici de la gravació.
      */
     private static long recordTime;
     /**
@@ -155,14 +157,14 @@ public class FXylophoneController implements Initializable {
      */
     @FXML private Button record;
     /**
-     * Botó per parar la grabació i guardar totes les dades de l'objecte
+     * Botó per parar la gravació i guardar totes les dades de l'objecte
      * ArrayList a un fitxer XML.
      */
     @FXML private Button stopRecord;
     
     /**
-     * Indicador de grabació, canvia de color quan l'aplicació està en el procés
-     * de grabació de notes.
+     * Indicador de gravació, canvia de color quan l'aplicació està en el procés
+     * de gravació de notes.
      */
     @FXML private Circle recordControl;
     
@@ -193,6 +195,8 @@ public class FXylophoneController implements Initializable {
             loadKeyBoard();
             loadButtons();
             
+        } catch (MissingKeyboardException mkEx) {
+            System.out.println(mkEx.getError());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -249,8 +253,9 @@ public class FXylophoneController implements Initializable {
                 public void handle(MouseEvent me) {
                     try {
                         idToKey(rect.getId());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    } catch (KeyErrorException keEx) {
+                        System.out.println(keEx.getError());
+                        setKey(ApplicationConstants.DEF_NOTE_VALUE);
                     }
                     playNote();
                 }
@@ -262,14 +267,31 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
+     * Controla l'indicador de gravació. Mentre l'aplicació estigui enregistrant
+     * notes, l'indicador serà de color vermell. En cas contrari, serà de color
+     * gris.
+     * 
+     * @param recording Booleà per indicar si l'aplicació es troba en procés de
+     * gravació.
+     */
+    private void switchRecordControl(boolean recording) {
+        
+        if (recording)
+            recordControl.setFill(Color.RED);
+        else
+            recordControl.setFill(Color.GREY);
+        
+    }
+    
+    /**
      * Funció de càrrega dels botons.
-     * Carrega els objectes de control de grabació, amb les seves corresponents
+     * Carrega els objectes de control de gravació, amb les seves corresponents
      * funcions que defineixen el comportament de cadascun.
      *
      */
     public void loadButtons() {
         
-        fileNameTF.setPromptText(Constants.TF_FILE_PROMPT);
+        fileNameTF.setPromptText(ApplicationConstants.TF_FILE_PROMPT);
         setXmlNoteRecorder(new FXylophoneXML());
         
         record.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -311,7 +333,7 @@ public class FXylophoneController implements Initializable {
                     try {
                         setFileNameFromTF();
                     } catch (InvalidFileNameException ifnEx) {
-                        xmlNoteRecorder.setFileName(Constants.DEFAULT_FILENAME);
+                        xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
                     }
                     playNotesFromXMLList();
                     setPlaying(false);
@@ -324,7 +346,7 @@ public class FXylophoneController implements Initializable {
     }
     //</editor-fold>
     
-    //<editor-fold defaultstate="collapsed" desc="Mètodes controladors de grabació/reproducció de notes.">
+    //<editor-fold defaultstate="collapsed" desc="Mètodes controladors de gravació/reproducció de notes.">
     /**
      * Funció per especificar el nom del fitxer XML a on es guardaran els
      * objectes Note. Els formata adequadament
@@ -333,7 +355,7 @@ public class FXylophoneController implements Initializable {
         
         String fileName = fileNameTF.getText();
         
-        if (!fileName.equals(Constants.VOID_STRING))
+        if (!fileName.equals(ApplicationConstants.VOID_STRING))
             xmlNoteRecorder.setFileName(fileName);
         else {
             throw new InvalidFileNameException();
@@ -355,7 +377,7 @@ public class FXylophoneController implements Initializable {
      */
     public void idToKey(String key) throws KeyErrorException {
         
-        int newKey = 2*Integer.parseInt(key) + 90;
+        int newKey = 2*Integer.parseInt(key) + ApplicationConstants.DEF_NOTE_VALUE;
         int oldKey = this.key;
         setKey(newKey);
         
@@ -368,7 +390,7 @@ public class FXylophoneController implements Initializable {
      * Funció per reproduir una nota.
      * Reprodueix una nota pel canal 10 i desa les seves propietats
      * (moment i to) en un objecte de la classe Note.
-     * En cas d'estar el programa en procés de grabació, afegeix la nota
+     * En cas d'estar el programa en procés de gravació, afegeix la nota
      * reproduïda a una estructura de dades NoteQueue.
      */
     public void playNote() {
@@ -379,7 +401,7 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        mc[4].noteOn(n.getValue(), Constants.VOLUME);
+        mc[4].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
         setKey(0);
         
     }
@@ -412,7 +434,7 @@ public class FXylophoneController implements Initializable {
             xmlNoteRecorder.notesToXML();
         } catch (InvalidFileNameException ifnEx) {
             System.out.println(ifnEx.getMessage());
-            xmlNoteRecorder.setFileName(Constants.DEFAULT_FILENAME);
+            xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
             try {
                 xmlNoteRecorder.notesToXML();
             } catch (Exception ex) {
@@ -427,7 +449,7 @@ public class FXylophoneController implements Initializable {
      * Funció per reproduir una nota extreta d'un fitxer XML.
      * Implementa un sistema pel qual la funció interpreta el temps entre cada
      * nota i fa esperar l'aplicació per tal de mantenir la coherència de la
-     * grabació.
+     * gravació.
      *
      * @param recdNote Nota a reproduir, extreta del fitxer XML.
      */
@@ -442,7 +464,7 @@ public class FXylophoneController implements Initializable {
             
             Thread.sleep(timeSleep);
             
-            mc[10].noteOn(noteValue,Constants.VOLUME);
+            mc[10].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
             setWait(playedTime);
             
         } catch (InterruptedException ex) {
@@ -490,19 +512,19 @@ public class FXylophoneController implements Initializable {
     
     /**
      * Retorna un valor booleà per saber si l'aplicació està en procés de
-     * grabació.
+     * gravació.
      * 
-     * @return Valor boolean (true si està grabant, false si no ho està).
+     * @return Valor boolean (true si està gravant, false si no ho està).
      */
     public boolean isRecording() {
         return recording;
     }
     
     /**
-     * Retorna el moment en què l'aplicació ha començat a grabar.
+     * Retorna el moment en què l'aplicació ha començat a gravar.
      * 
      * @return Valor long del temps en milisegons del moment en el que el
-     * programa ha començat a grabar les notes.
+     * programa ha començat a gravar les notes.
      */
     public static long getRecordTime() {
         return FXylophoneController.recordTime;
@@ -519,7 +541,7 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Retorna l'estructura de dades que guarda objectes Note per grabar i
+     * Retorna l'estructura de dades que guarda objectes Note per gravar i
      * reproduir.
      * 
      * @return Llista d'objectes de la classe Note.
@@ -533,7 +555,7 @@ public class FXylophoneController implements Initializable {
      * XML.
      * 
      * @return Objecte controlador dels fitxers XML on es guarden les dades
-     * dels objectes de la classe Note grabats.
+     * dels objectes de la classe Note gravats.
      */
     public FXylophoneXML getXmlNoteRecorder() {
         return xmlNoteRecorder;
@@ -586,7 +608,7 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Defineix la llista de notes per grabar/reproduir.
+     * Defineix la llista de notes per gravar/reproduir.
      * 
      * @param noteRecording Estructura de dades List d'objectes de la classe
      * Note.
@@ -596,20 +618,21 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Defineix si l'aplicació està grabant o no.
+     * Defineix si l'aplicació està gravant o no.
      * 
-     * @param recording Valor boolean (true si està grabant, false si no ho 
+     * @param recording Valor boolean (true si està gravant, false si no ho 
      * està).
      */
     public void setRecording(boolean recording) {
         this.recording = recording;
+        switchRecordControl(recording);
     }
     
     /**
      * Defineix el moment en què l'aplicació ha començat a enregistrar so.
      * 
      * @param recordTime Valor long del moment en milisegons en què l'aplicació
-     * ha començat a grabar.
+     * ha començat a gravar.
      */
     public void setRecordTime(long recordTime) {
         this.recordTime = recordTime;
@@ -630,7 +653,7 @@ public class FXylophoneController implements Initializable {
      * XML.
      * 
      * @param xmlToNote Objecte controlador dels fitxers XML on es guarden les dades
-     * dels objectes de la classe Note grabats.
+     * dels objectes de la classe Note gravats.
      */
     private void setXmlNoteRecorder(FXylophoneXML xmlToNote) {
         this.xmlNoteRecorder = xmlToNote;

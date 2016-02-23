@@ -1,7 +1,7 @@
 package fxyl;
 
 //<editor-fold defaultstate="collapsed" desc="Imports.">
-import constants.Constants;
+import constants.ApplicationConstants;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,10 +41,10 @@ public class FXylophone extends Application {
         Parent arrel;
         try {
             
-            arrel = FXMLLoader.load(getClass().getResource(Constants.VIEW_FILE));
+            arrel = FXMLLoader.load(getClass().getResource(ApplicationConstants.VIEW_FILE));
             
-            stage.setTitle(Constants.TITLE);
-            stage.setScene(new Scene(arrel, Constants.W_WIDTH, Constants.W_HEIGHT));
+            stage.setTitle(ApplicationConstants.TITLE);
+            stage.setScene(new Scene(arrel, ApplicationConstants.W_WIDTH, ApplicationConstants.W_HEIGHT));
             stage.show();
             
         } catch (IOException ex) {
