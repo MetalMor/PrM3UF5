@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 /**
  * Classe que hereta d'Application. Per executar el programa del xilòfon.
  *
- * 220116
+ * @version 220116
  * @author mor
  */
 public class FXylophone extends Application {

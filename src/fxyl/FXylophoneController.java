@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
@@ -24,12 +25,13 @@ import note.Note;
 import note.NoteImpl;
 import note.NoteList;
 //</editor-fold>
+
 /**
  * Classe controladora del xilòfon.
  * Realitza les tasques relacionades amb la comunicació amb l'usuari per al
  * tractament d'objectes de classe Note.
  *
- * 260116
+ * @version 260116
  * @author mor
  */
 public class FXylophoneController implements Initializable {
@@ -157,6 +159,12 @@ public class FXylophoneController implements Initializable {
      * ArrayList a un fitxer XML.
      */
     @FXML private Button stopRecord;
+    
+    /**
+     * Indicador de grabació, canvia de color quan l'aplicació està en el procés
+     * de grabació de notes.
+     */
+    @FXML private Circle recordControl;
     
     /**
      * Camp de text a on s'introdueix el nom del fitxer XML per guardar i

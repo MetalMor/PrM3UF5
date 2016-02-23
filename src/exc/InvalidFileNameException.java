@@ -3,7 +3,7 @@ package exc;
 /**
  * Excepció per tractar problemes amb el nom d'un fitxer.
  * 
- * 080216
+ * @version 080216
  * @author mor
  */
 public class InvalidFileNameException extends Exception {

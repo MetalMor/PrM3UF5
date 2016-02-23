@@ -9,6 +9,7 @@ import java.util.Collection;
  * Classe que hereta d'ArrayList per crear estructures de dades orientades a
  * guardar objectes de la classe Note.
  * 
+ * @version 120216
  * @author Edgar Ben
  */
 public class NoteList<T> extends ArrayList {

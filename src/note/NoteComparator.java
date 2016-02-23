@@ -7,7 +7,7 @@ import java.util.Comparator;
  * Implementa Comparator per tal de mantenir les estructures de dades d'objectes
  * Note ordenats ascendentment.
  *
- * 020216
+ * @version 020216
  * @author mor
  */
 public class NoteComparator implements Comparator {

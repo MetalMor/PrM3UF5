@@ -79,7 +79,7 @@
         <Font size="16.0" />
       </font>
     </Label>
-    <Circle layoutX="664.0" layoutY="106.0" radius="8.12493896484375" />
+    <Circle layoutX="664.0" layoutY="106.0" radius="8.0" />
     <Label layoutX="542.0" layoutY="189.0" text="Nota reproduida">
       <font>
         <Font size="18.0" />

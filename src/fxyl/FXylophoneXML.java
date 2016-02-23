@@ -26,16 +26,16 @@ import org.xml.sax.SAXException;
 //</editor-fold>
 
 /**
- * Classe que implementa la inserció i extracció d'objectes Note a un fitxer 
- * XML. 
+ * Classe que implementa la inserció i extracció d'objectes Note a un fitxer
+ * XML.
  *
- * 020216
+ * @version 020216
  * @author mor
  */
 public class FXylophoneXML {
-    
+
     // PROPIETATS
-    
+
     //<editor-fold defaultstate="collapsed" desc="Propietats.">
     /**
      * Estructura de dades per guardar temporalment objectes Note en el procés
@@ -53,16 +53,16 @@ public class FXylophoneXML {
      */
     private String fileName;
     //</editor-fold>
-    
+
     // MÈTODES
-    
+
     //<editor-fold defaultstate="collapsed" desc="Constructors.">
     /**
      * Constructor sense arguments.
      */
     public FXylophoneXML() { }
 //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Mètodes Note -> XML.">
     /**
      * Funció que construeix un element Note.
@@ -75,9 +75,9 @@ public class FXylophoneXML {
      * @return Element
      */
     public Element XMLcreateNoteElement(Note n, Document doc) {
-        
+
         Element note = doc.createElement(Constants.NOTE_ELEMENT);
-        
+
         /**
          * Elements fills de <Note>
          */
@@ -87,91 +87,91 @@ public class FXylophoneXML {
         Element timestamp = doc.createElement(Constants.TIMESTAMP_ELEMENT);
         timestamp.appendChild(
                 doc.createTextNode(Long.toString(n.getTimestamp())));
-        
+
         note.appendChild(value);
         note.appendChild(timestamp);
-        
+
         return note;
-        
+
     }
-    
+
     /**
      * Funció Note a XML.
      * Guarda les dades d'un conjunt d'objectes Note en un document XML
      * utilitzant l'API DOM.
      *
      * @throws ParserConfigurationException en cas d'error de configuració.
-     * @throws WrongNoteException en cas de trobar una incoherència en un 
+     * @throws WrongNoteException en cas de trobar una incoherència en un
      * objecte Note.
      * @throws TransformerException en cas de trobar problemes durant la
      * transformació en un document XML.
      */
     public void notesToXML() throws ParserConfigurationException,
             WrongNoteException, TransformerException {
-        
+
         noteList.sort(nc);
-        
+
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        
+
         Document docNode = docBuilder.newDocument();
         Element rootElement = docNode.createElement(Constants.SOUNDFILE_ELEMENT);
         docNode.appendChild(rootElement);
-        
+
         for (Note note : noteList) {
-            
+
             /**
              * Si no és una nota de MIDI, llença una excepció.
              */
             if(!(note instanceof Note))
                 throw new WrongNoteException();
-            
+
             Note noteToRecord = (Note) note;
-            
+
             rootElement.appendChild(
                     XMLcreateNoteElement(noteToRecord, docNode)
             );
-            
+
         }
-        
+
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transf = tf.newTransformer();
         DOMSource orig = new DOMSource(docNode);
         StreamResult outXML = new StreamResult(new File(this.fileName));
-        
+
         transf.transform(orig, outXML);
-        
+
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Mètodes XML -> Note.">
     public boolean recordNote(Note n) {
-        
+
         System.out.println("XMLtoNote");
         System.out.println(n);
         if(!noteList.add(n))
             return false;
-        
+
         return true;
-        
+
     }
-    
+
     /**
      * Funció per extreure un conjunt de notes d'un fitxer XML.
      * Per reproduir les notes guardades a un arxiu XML s'han de desar en una
      * llista d'objectes Note.
-     * 
+     *
      * @return La llista d'objectes de la classe Note construits a partir de les
      * dades d'un fitxer XML.
      * @throws IOException si hi ha un error d'entrada/sortida de dades.
      * @throws SAXException si hi ha un error amb l'API SAX.
      * @throws ParserConfigurationException en cas d'error de configuració.
-     * @throws WrongNoteException en cas de trobar una incoherència en un 
+     * @throws WrongNoteException en cas de trobar una incoherència en un
      * objecte Note.
      */
-    public List<Note> XMLtoNotes() throws IOException, SAXException, 
+    public List<Note> XMLtoNotes() throws IOException, SAXException,
             ParserConfigurationException, WrongNoteException {
-        
+
         File midiXml = new File(this.getFileName());
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -179,36 +179,36 @@ public class FXylophoneXML {
         doc.getDocumentElement().normalize();
 
         NodeList nodes = doc.getElementsByTagName(Constants.NOTE_ELEMENT);
-        
+
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                
+
                 Element element = (Element) node;
                 Note noteToPlay = new NoteImpl(
                         Integer.parseInt(getContent(Constants.VALUE_ELEMENT, element)),
                         Long.parseLong(getContent(Constants.TIMESTAMP_ELEMENT, element))
                 );
-                
+
                 if(!recordNote(noteToPlay))
                     throw new WrongNoteException();
-                
+
             }
         }
-        
+
         noteList.sort(nc);
-        
+
         for (Note note : noteList)
             System.out.println(note);
-        
+
         return noteList;
-        
+
     }
-    
+
     /**
      * Funció per recuperar el valor d'un node XML.
-     * 
+     *
      * @param etiqueta Node que desitgem extreure de l'XML.
      * @param element Element a on cercar el node
      * @return El valor del node en forma de String.
@@ -219,62 +219,62 @@ public class FXylophoneXML {
         return node.getNodeValue();
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Getters i setters">
     /**
      * Retorna l'estructura de dades que guarda objectes Note per grabar i
      * reproduir.
-     * 
+     *
      * @return Llista d'objectes de la classe Note.
      */
     public List<Note> getNoteRecording() {
         return noteList;
     }
-    
+
     /**
      * Retorna el comparador d'objectes Note.
-     * 
+     *
      * @return Objecte que implementa Comparator.
      */
     public NoteComparator getNc() {
         return nc;
     }
-    
+
     /**
      * Retorna el nom del fitxer per guardar/reproduir.
-     * 
+     *
      * @return String del nom del fitxer XML (sense extensió).
      */
     public String getFileName() {
         return fileName;
     }
-    
+
     /**
      * Defineix l'objecte llista de notes.
-     * 
+     *
      * @param noteRecording Llista d'objectes de la classe Note.
      */
     public void setNoteRecording(NoteList<Note> noteRecording) {
         this.noteList = noteRecording;
     }
-    
+
     /**
      * Defineix el comparador d'objectes Note.
-     * 
+     *
      * @param nc Objecte que implementa Comparator.
      */
     public void setNc(NoteComparator nc) {
         this.nc = nc;
     }
-    
+
     /**
      * Defineix el nom del fitxer per guardar/reproduir notes.
-     * 
+     *
      * @param fileName String del nom del fitxer XML (sense extensió).
      */
     public void setFileName(String fileName) {
         this.fileName = fileName + Constants.EXT;
     }
     //</editor-fold>
-    
+
 }

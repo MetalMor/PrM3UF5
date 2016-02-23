@@ -4,7 +4,7 @@ package exc;
  * Excepció per controlar errors amb la transferència d'objectes Note del 
  * programa a un fitxer XML i al revés.
  *
- * 020216
+ * @version 020216
  * @author mor
  */
 public class WrongNoteException extends Exception {

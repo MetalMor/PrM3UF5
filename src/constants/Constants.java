@@ -5,7 +5,7 @@ package constants;
  * projecte.
  * 
  *
- * 030216
+ * @version 030216
  * @author mor
  */
 public class Constants {

@@ -8,7 +8,7 @@ import fxyl.FXylophoneController;
 /**
  * Classe d'implementació per crear objectes Note.
  * 
- * 110216
+ * @version 110216
  * @author Edgar Ben
  */
 public class NoteImpl extends Note {

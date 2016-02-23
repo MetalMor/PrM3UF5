@@ -3,7 +3,7 @@ package note;
 /**
  * Classe que representa una nota reproduïda pel programa.
  *
- * 020216
+ * @version 020216
  * @author mor
  */
 public abstract class Note implements Comparable {
