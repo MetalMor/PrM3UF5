@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -173,6 +172,17 @@ public class FXylophoneController implements Initializable {
      * reproduir les notes.
      */
     @FXML private TextField fileNameTF;
+    
+    /**
+     * Camp de text a on es mostra el fitxer utilitzat per l'intercanvi de
+     * dades d'objectes Note.
+     */
+    @FXML private TextField showFileNameTF;
+    
+    /**
+     * Camp de text a on es mostra la nota reproduïda en temps real.
+     */
+    @FXML private TextField showPlayedNoteTF;
     //</editor-fold>
     
     // MÈTODES
@@ -267,23 +277,6 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Controla l'indicador de gravació. Mentre l'aplicació estigui enregistrant
-     * notes, l'indicador serà de color vermell. En cas contrari, serà de color
-     * gris.
-     * 
-     * @param recording Booleà per indicar si l'aplicació es troba en procés de
-     * gravació.
-     */
-    private void switchRecordControl(boolean recording) {
-        
-        if (recording)
-            recordControl.setFill(Color.RED);
-        else
-            recordControl.setFill(Color.GREY);
-        
-    }
-    
-    /**
      * Funció de càrrega dels botons.
      * Carrega els objectes de control de gravació, amb les seves corresponents
      * funcions que defineixen el comportament de cadascun.
@@ -342,6 +335,23 @@ public class FXylophoneController implements Initializable {
             }
             
         });
+        
+    }
+    
+    /**
+     * Controla l'indicador de gravació. Mentre l'aplicació estigui enregistrant
+     * notes, l'indicador serà de color vermell. En cas contrari, serà de color
+     * gris.
+     * 
+     * @param recording Booleà per indicar si l'aplicació es troba en procés de
+     * gravació.
+     */
+    private void switchRecordControl(boolean recording) {
+        
+        if (recording)
+            recordControl.setFill(Color.RED);
+        else
+            recordControl.setFill(Color.GREY);
         
     }
     //</editor-fold>

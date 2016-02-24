@@ -100,8 +100,8 @@
     <Label font="$x1" layoutX="412.0" layoutY="18.0" text="P" textFill="#1000cc" />
     <Label font="$x1" layoutX="364.0" layoutY="18.0" text="U" textFill="#33ffe7" />
     <Label font="$x1" layoutX="287.0" layoutY="18.0" text="X" textFill="#ff6666" />
-    <TextField layoutX="560.0" layoutY="216.0" prefHeight="47.125" prefWidth="87.0" />
-    <TextField layoutX="539.0" layoutY="164.0" prefHeight="25.0" prefWidth="145.00009999999747" />
+    <TextField editable="false"  layoutX="560.0" layoutY="216.0" prefHeight="47.125" prefWidth="87.0" />
+    <TextField editable="false" layoutX="539.0" layoutY="164.0" prefHeight="25.0" prefWidth="145.00009999999747" />
   </children>
   <effect>
     <DropShadow blurType="TWO_PASS_BOX" height="101.44642857142858" radius="44.78422619047619" spread="0.22222222222222224" width="79.69047619047619" />
