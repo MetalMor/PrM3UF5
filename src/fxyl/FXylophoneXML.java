@@ -121,7 +121,9 @@ public class FXylophoneXML {
         for (Note note : noteList) {
 
             /**
-             * Si no és una nota de MIDI, llença una excepció.
+             * Si no és una nota de MIDI, llença una excepció. No té sentit perquè
+             * només s'utilitzen objectes de la classe Note en aquest programa, però
+             * em feia il·lusió posar aquesta excepció :D
              */
             if(!(note instanceof Note))
                 throw new WrongNoteException();

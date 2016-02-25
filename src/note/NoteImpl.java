@@ -36,9 +36,9 @@ public class NoteImpl extends Note {
         long recordTime = FXylophoneController.getRecordTime();
         long noteTime = currentTime - recordTime;
         
-        System.out.println("Actual: " + currentTime/1000);
-        System.out.println("Programa: " + recordTime/1000);
-        System.out.println("Nota: " + noteTime/1000);
+//        System.out.println("Actual: " + currentTime/1000);
+//        System.out.println("Programa: " + recordTime/1000);
+//        System.out.println("Nota: " + noteTime/1000);
         
         return noteTime;
         

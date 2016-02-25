@@ -49,13 +49,15 @@ public abstract class Note implements Comparable {
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Overrides (compareTo i toString).">
+    //<editor-fold defaultstate="collapsed" desc="Overrides (Object).">
     /**
      * Retorna un valor enter negatiu, positiu o zero en funció de
      * l'ordre esperat de les notes.
      *
      * @param o Objecte amb el qual comparar-se
-     * @return Valor negatiu si l'objecte
+     * @return Valor negatiu si l'objecte en qüestió es troba abans que l'altre,
+     * positiu en cas contrari i 0 si van a la mateixa posició (cosa impossible, 
+     * per cert).
      */
     @Override
     public int compareTo(Object o) {
@@ -72,7 +74,7 @@ public abstract class Note implements Comparable {
     }
     
     /**
-     * Retorna l'objecte en forma de String.
+     * Retorna l'objecte en forma de String (per debugar). 
      *
      * @return Cadena amb les propietats de l'objecte llistades.
      */

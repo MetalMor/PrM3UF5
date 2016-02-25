@@ -2,7 +2,7 @@ package constants;
 
 /**
  * Classe per agrupar les constants útils per al funcionament del 
- * projecte.
+ * programa.
  * 
  *
  * @version 030216
