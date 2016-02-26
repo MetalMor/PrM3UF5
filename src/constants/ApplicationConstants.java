@@ -88,6 +88,9 @@ public class ApplicationConstants {
      * guardar cadascun dels objectes Note.
      */
     public static final String TF_FILE_PROMPT = "Fitxer...";
+    
+    public static final int MIDICHANNEL = 10;
+    
     //</editor-fold>
     
 }

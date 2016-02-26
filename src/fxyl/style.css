@@ -204,3 +204,15 @@ Circle:pressed {
     -fx-stroke-width: 3;
 }
 
+GridPane{
+    -fx-background-image:url(background1_1.jpg);
+    -fx-border-style:solid ;
+    -fx-border-color:black;
+    -fx-border-radius: 10px;
+}
+
+AnchorPane{
+     -fx-background-image:url(background.jpg);
+    
+    
+}

@@ -144,6 +144,16 @@ public class FXylophoneController implements Initializable {
      * Flag per indicar si el programa està reproduint.
      */
     private boolean playing = false;
+    /**
+     * 
+     */
+    @FXML private TextField estatTF;
+    
+      /**
+     * 
+     */
+    @FXML private TextField notaReproduidaTF;
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Objectes de la interfície de l'usuari.">
@@ -293,6 +303,7 @@ public class FXylophoneController implements Initializable {
         
         fileNameTF.setPromptText(ApplicationConstants.TF_FILE_PROMPT);
         setXmlNoteRecorder(new FXylophoneXML());
+        setRecording(false);
         
         record.setOnMouseClicked(new EventHandler<MouseEvent>() {
             
@@ -401,7 +412,7 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        mc[4].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
+        mc[ApplicationConstants.MIDICHANNEL].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
         setKey(0);
         
     }
@@ -464,13 +475,26 @@ public class FXylophoneController implements Initializable {
             
             Thread.sleep(timeSleep);
             
-            mc[10].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
+            mc[ApplicationConstants.MIDICHANNEL].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
             setWait(playedTime);
             
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }
+    
+      /**
+     * Funció que s'encarrega  de cridar la funció reproductora de notes i printar-les.
+     * 
+     */
+    
+    private void sound(int value){
+    
+         mc[ApplicationConstants.MIDICHANNEL].noteOn(value,ApplicationConstants.DEF_NOTE_VOLUME);
+         // TODO textfield 
+    
+    }
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Getters i setters.">
@@ -625,7 +649,7 @@ public class FXylophoneController implements Initializable {
      */
     public void setRecording(boolean recording) {
         this.recording = recording;
-        switchRecordControl(recording);
+       // switchRecordControl(recording);
     }
     
     /**
