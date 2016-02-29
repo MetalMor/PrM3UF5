@@ -5,19 +5,26 @@ import constants.ApplicationConstants;
 import exc.InvalidFileNameException;
 import exc.KeyErrorException;
 import exc.MissingKeyboardException;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javax.imageio.ImageIO;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -109,8 +116,12 @@ public class FXylophoneController implements Initializable {
      * Dotzena tecla.
      */
     @FXML private Rectangle rect12;
+    /**
+     * Imatge animada.
+     */
+    @FXML private ImageView image;
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Propietats de control de gravació/reproducció.">
     /**
      * Objecte encarregat de gestionar la inserció i extracció d'objectes Note
@@ -143,6 +154,16 @@ public class FXylophoneController implements Initializable {
      * Flag per indicar si el programa està reproduint.
      */
     private boolean playing = false;
+    /**
+     * 
+     */
+    @FXML private TextField estatTF;
+    
+      /**
+     * 
+     */
+    @FXML private TextField notaReproduidaTF;
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Objectes de la interfície de l'usuari.">
@@ -204,7 +225,7 @@ public class FXylophoneController implements Initializable {
             syn.open();
             loadKeyBoard();
             loadButtons();
-            
+            //setImage(initImage());
         } catch (MissingKeyboardException mkEx) {
             System.out.println(mkEx.getError());
         } catch (Exception ex) {
@@ -239,6 +260,13 @@ public class FXylophoneController implements Initializable {
         
         return false;
         
+    }
+    
+    private Image initImage() throws IOException {
+        BufferedImage bi;
+        bi = ImageIO.read(new File("file:peanut-butter-jelly-time.gif"));
+        Image img = SwingFXUtils.toFXImage(bi, null);
+        return img;
     }
     
     /**
@@ -286,6 +314,7 @@ public class FXylophoneController implements Initializable {
         
         fileNameTF.setPromptText(ApplicationConstants.TF_FILE_PROMPT);
         setXmlNoteRecorder(new FXylophoneXML());
+        setRecording(false);
         
         record.setOnMouseClicked(new EventHandler<MouseEvent>() {
             
@@ -347,6 +376,8 @@ public class FXylophoneController implements Initializable {
      * gravació.
      */
     private void switchRecordControl(boolean recording) {
+        
+        this.recordControl = new Circle();
         
         if (recording)
             recordControl.setFill(Color.RED);
@@ -411,7 +442,7 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        mc[4].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
+        mc[ApplicationConstants.MIDICHANNEL].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
         setKey(0);
         
     }
@@ -474,13 +505,26 @@ public class FXylophoneController implements Initializable {
             
             Thread.sleep(timeSleep);
             
-            mc[10].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
+            mc[ApplicationConstants.MIDICHANNEL].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
             setWait(playedTime);
             
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }
+    
+      /**
+     * Funció que s'encarrega  de cridar la funció reproductora de notes i printar-les.
+     * 
+     */
+    
+    private void sound(int value){
+    
+         mc[ApplicationConstants.MIDICHANNEL].noteOn(value,ApplicationConstants.DEF_NOTE_VOLUME);
+         // TODO textfield 
+    
+    }
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Getters i setters.">
@@ -582,6 +626,15 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
+     * Retorna la imatge mostrada per la vista.
+     * 
+     * @return Objecte de la classe Image mostrat per la vista.
+     */
+    public Image getImage() {
+        return image.getImage();
+    }
+    
+    /**
      * Defineix l'objecte sintetitzador de l'API MIDI.
      * 
      * @param syn Objecte de la classe Synthesizer.
@@ -677,6 +730,15 @@ public class FXylophoneController implements Initializable {
      */
     public void setWait(long wait) {
         this.wait = wait;
+    }
+    
+    /**
+     * Defineix la imatge mostrada per la vista.
+     * 
+     * @param image Objecte imatge que la vista mostrarà.
+     */
+    public void setImage(Image image) {
+        this.image.setImage(image);
     }
     //</editor-fold>
     

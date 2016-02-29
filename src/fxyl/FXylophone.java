@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 //</editor-fold>
 
@@ -45,6 +46,7 @@ public class FXylophone extends Application {
             
             stage.setTitle(ApplicationConstants.TITLE);
             stage.setScene(new Scene(arrel, ApplicationConstants.W_WIDTH, ApplicationConstants.W_HEIGHT));
+            stage.getIcons().add(new Image(FXylophone.class.getResourceAsStream("icon.png")));
             stage.show();
             
         } catch (IOException ex) {

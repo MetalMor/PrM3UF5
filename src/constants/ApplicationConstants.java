@@ -24,12 +24,22 @@ public class ApplicationConstants {
     /**
      * Títol de la finestra del programa.
      */
-    public static final String TITLE = "FXylophone!";
+    public static final String TITLE = "Banana FXylophone!";
     
     /**
      * Nom del fitxer que guarda la vista.
      */
     public static final String VIEW_FILE = "FXylophoneView.fxml";
+    
+    /**
+     * Nom del fitxer que guarda l'animació del plàtan ballant.
+     */
+    public static final String PEANUT_BUTTER_JELLY_TIME_FILE = "peanut-butter-jelly-time.gif";
+    
+    /**
+     * Nom del fitxer que guarda la icona de la barra de tasques/finestra.
+     */
+    public static final String ICON_FILE = "icon.png";
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Constants per a l'ús de fitxers XML.">
@@ -88,6 +98,12 @@ public class ApplicationConstants {
      * guardar cadascun dels objectes Note.
      */
     public static final String TF_FILE_PROMPT = "Fitxer...";
+    
+    /**
+     * Valor enter del canal de MIDI que reproduirà el so.
+     */
+    public static final int MIDICHANNEL = 10;
+    
     //</editor-fold>
     
 }
