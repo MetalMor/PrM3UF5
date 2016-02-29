@@ -34,7 +34,7 @@ public class ApplicationConstants {
     /**
      * Nom del fitxer que guarda l'animació del plàtan ballant.
      */
-    public static final String PEANUT_BUTTER_JELLY_TIME_FILE = "peanut-butter-jelly-time.gif";
+    public static final String PEANUT_BUTTER_JELLY_TIME_FILE = "file:peanut-butter-jelly-time.gif";
     
     /**
      * Nom del fitxer que guarda la icona de la barra de tasques/finestra.

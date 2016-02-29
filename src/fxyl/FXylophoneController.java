@@ -264,7 +264,7 @@ public class FXylophoneController implements Initializable {
     
     private Image initImage() throws IOException {
         BufferedImage bi;
-        bi = ImageIO.read(new File("file:peanut-butter-jelly-time.gif"));
+        bi = ImageIO.read(new File(ApplicationConstants.PEANUT_BUTTER_JELLY_TIME_FILE));
         Image img = SwingFXUtils.toFXImage(bi, null);
         return img;
     }
