@@ -1,5 +1,7 @@
 package note;
 
+import constants.ApplicationConstants;
+
 /**
  * Classe que representa una nota reproduïda pel programa.
  *
@@ -7,7 +9,7 @@ package note;
  * @author mor
  */
 public abstract class Note implements Comparable {
-    
+
     // PROPIETATS
     
     //<editor-fold defaultstate="collapsed" desc="Propietats.">
@@ -106,7 +108,25 @@ public abstract class Note implements Comparable {
      * l'execució del programa i la instància de l'objecte Note reproduït.
      */
     public abstract long getPlayedTime();
+    
 //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Altres.">
+    /**
+     * Funció per obtenir el valor numèric d'una nota a partir de la clau
+     * corresponent a la tecla del teclat virtual.
+     *
+     * @param key Índex de la tecla premuda.
+     * @return Valor enter de la nota.
+     */
+    public static int noteValueFromKey(String key) {
+        return 2*Integer.parseInt(key) + ApplicationConstants.DEF_NOTE_VALUE;
+    }
+    
+    public static String noteKeyFromValue(int value) {
+        return String.valueOf((value - ApplicationConstants.DEF_NOTE_VALUE)/2);
+    }
+    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Getters i setters">
     /**

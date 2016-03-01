@@ -5,6 +5,7 @@ import constants.ApplicationConstants;
 import exc.InvalidFileNameException;
 import exc.KeyErrorException;
 import exc.MissingKeyboardException;
+import exc.WrongNoteException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -154,16 +155,6 @@ public class FXylophoneController implements Initializable {
      * Flag per indicar si el programa està reproduint.
      */
     private boolean playing = false;
-    /**
-     * 
-     */
-    @FXML private TextField estatTF;
-    
-      /**
-     * 
-     */
-    @FXML private TextField notaReproduidaTF;
-    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Objectes de la interfície de l'usuari.">
@@ -198,7 +189,7 @@ public class FXylophoneController implements Initializable {
      * Camp de text a on es mostra el fitxer utilitzat per l'intercanvi de
      * dades d'objectes Note.
      */
-    @FXML private TextField showFileNameTF;
+    @FXML private TextField showStateTF;
     
     /**
      * Camp de text a on es mostra la nota reproduïda en temps real.
@@ -227,9 +218,11 @@ public class FXylophoneController implements Initializable {
             loadButtons();
             //setImage(initImage());
         } catch (MissingKeyboardException mkEx) {
-            System.out.println(mkEx.getError());
+            showInfo(mkEx.getError(), getShowStateTf());
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            showInfo(ApplicationConstants.READY_MESSAGE, getShowStateTf());
         }
         
     }
@@ -292,7 +285,7 @@ public class FXylophoneController implements Initializable {
                     try {
                         idToKey(rect.getId());
                     } catch (KeyErrorException keEx) {
-                        System.out.println(keEx.getError());
+                        getShowStateTf().setText(keEx.getError());
                         setKey(ApplicationConstants.DEF_NOTE_VALUE);
                     }
                     playNote();
@@ -312,7 +305,11 @@ public class FXylophoneController implements Initializable {
      */
     public void loadButtons() {
         
-        fileNameTF.setPromptText(ApplicationConstants.TF_FILE_PROMPT);
+        setFileNameTf(getFileNameTf());
+        setShowPlayedNoteTf(getShowPlayedNoteTF());
+        setShowStateTf(getShowStateTf());
+        
+        getFileNameTf().setPromptText(ApplicationConstants.TF_FILE_PROMPT);
         setXmlNoteRecorder(new FXylophoneXML());
         setRecording(false);
         
@@ -385,6 +382,11 @@ public class FXylophoneController implements Initializable {
             recordControl.setFill(Color.GREY);
         
     }
+    
+    private void showInfo(String data, TextField out) {
+        out.setText(data);
+    }
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Mètodes controladors de gravació/reproducció de notes.">
@@ -394,7 +396,7 @@ public class FXylophoneController implements Initializable {
      */
     private void setFileNameFromTF() throws InvalidFileNameException {
         
-        String fileName = fileNameTF.getText();
+        String fileName = getFileNameTf().getText();
         
         if (!fileName.equals(ApplicationConstants.VOID_STRING))
             xmlNoteRecorder.setFileName(fileName);
@@ -418,7 +420,7 @@ public class FXylophoneController implements Initializable {
      */
     public void idToKey(String key) throws KeyErrorException {
         
-        int newKey = 2*Integer.parseInt(key) + ApplicationConstants.DEF_NOTE_VALUE;
+        int newKey = Note.noteValueFromKey(key);
         int oldKey = this.key;
         setKey(newKey);
         
@@ -442,7 +444,7 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        mc[ApplicationConstants.MIDICHANNEL].noteOn(n.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
+        sound(n.getValue());
         setKey(0);
         
     }
@@ -454,12 +456,17 @@ public class FXylophoneController implements Initializable {
      */
     private void playNotesFromXMLList() {
         try {
+            showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
             NoteList<Note> noteList = (NoteList<Note>) xmlNoteRecorder.XMLtoNotes();
             setNoteList(noteList);
             for (Note note : getNoteList())
                 playRecordedNote(note);
+        } catch (WrongNoteException wnEx) {
+            showInfo(wnEx.getError(), getShowStateTf());
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            showInfo(ApplicationConstants.END_PLAYING_MESSAGE, getShowStateTf());
         }
     }
     
@@ -478,9 +485,13 @@ public class FXylophoneController implements Initializable {
             xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
             try {
                 xmlNoteRecorder.notesToXML();
+            } catch (WrongNoteException wnEx) {
+                showInfo(wnEx.getError(), getShowStateTf());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        } catch (WrongNoteException wnEx) {
+            showInfo(wnEx.getError(), getShowStateTf());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -496,8 +507,6 @@ public class FXylophoneController implements Initializable {
      */
     public void playRecordedNote(Note recdNote) {
         try {
-            System.out.println(recdNote);
-            
             // espera el temps necessari des de l'última nota per reproduïr la següent
             long playedTime = recdNote.getTimestamp() + 1;
             long timeSleep = playedTime - getWait();
@@ -505,7 +514,7 @@ public class FXylophoneController implements Initializable {
             
             Thread.sleep(timeSleep);
             
-            mc[ApplicationConstants.MIDICHANNEL].noteOn(noteValue,ApplicationConstants.DEF_NOTE_VOLUME);
+            sound(noteValue);
             setWait(playedTime);
             
         } catch (InterruptedException ex) {
@@ -513,14 +522,14 @@ public class FXylophoneController implements Initializable {
         }
     }
     
-      /**
-     * Funció que s'encarrega  de cridar la funció reproductora de notes i printar-les.
-     * 
+    /**
+     * Funció que s'encarrega  de cridar la funció reproductora de notes. També
+     * printa el nom de la nota al seu TextField corresponent.
      */
-    
     private void sound(int value){
     
-         mc[ApplicationConstants.MIDICHANNEL].noteOn(value,ApplicationConstants.DEF_NOTE_VOLUME);
+         mc[ApplicationConstants.MIDICHANNEL]
+                 .noteOn(value, ApplicationConstants.DEF_NOTE_VOLUME);
          // TODO textfield 
     
     }
@@ -633,6 +642,48 @@ public class FXylophoneController implements Initializable {
     public Image getImage() {
         return image.getImage();
     }
+
+    /**
+     * Retorna l'objecte que fa d'indicador per saber si l'aplicació es troba
+     * en procés de gravació de notes. En cas que no existeixi, el crea.
+     * 
+     * @return Objecte indicador de la classe Circle.
+     */
+    public Circle getRecordControl() {
+        if (recordControl == null)
+            recordControl = new Circle();
+        return recordControl;
+    }
+    
+    public TextField getFileNameTf() {
+        if (fileNameTF == null)
+            fileNameTF = new TextField();
+        return fileNameTF;
+    }
+    
+    /**
+     * Retorna l'objecte camp de text a on mostrar l'estat de l'aplicació.
+     * En cas que no existeixi, el crea.
+     * 
+     * @return Objecte camp de text.
+     */
+    public TextField getShowStateTf() {
+        if (showStateTF == null)
+            showStateTF = new TextField();
+        return showStateTF;
+    }
+
+    /**
+     * Retorna l'objecte camp de text a on mostrar la nota reproduïda pel 
+     * teclat virtual. En cas que no existeixi, el crea.
+     * 
+     * @return Objecte camp de text.
+     */
+    public TextField getShowPlayedNoteTF() {
+        if (showPlayedNoteTF == null)
+            showPlayedNoteTF = new TextField();
+        return showPlayedNoteTF;
+    }
     
     /**
      * Defineix l'objecte sintetitzador de l'API MIDI.
@@ -688,6 +739,10 @@ public class FXylophoneController implements Initializable {
      */
     public void setRecording(boolean recording) {
         this.recording = recording;
+        if (recording)
+            showInfo(ApplicationConstants.RECORDING_MESSAGE, getShowStateTf());
+        else
+            showInfo(ApplicationConstants.STOP_RECORDING_MESSAGE, getShowStateTf());
         switchRecordControl(recording);
     }
     
@@ -739,6 +794,45 @@ public class FXylophoneController implements Initializable {
      */
     public void setImage(Image image) {
         this.image.setImage(image);
+    }
+    
+    /**
+     * Defineix l'objecte que farà d'indicador per saber si l'aplicació
+     * està en procés de gravació de notes.
+     * 
+     * @param recordControl Objecte indicador de la classe Circle.
+     */
+    public void setRecordControl(Circle recordControl) {
+        this.recordControl = recordControl;
+    }
+    
+    /**
+     * Defineix l'objecte camp de text a on mostrar el fitxer XML que
+     * l'aplicació utilitzarà per guardar/reproduir notes.
+     * 
+     * @param fileNameTF Objecte camp de text.
+     */
+    private void setFileNameTf(TextField fileNameTF) {
+        this.fileNameTF = fileNameTF;
+    }
+    
+    /**
+     * Defineix l'objecte camp de text a on mostrar l'estat de l'aplicació.
+     * 
+     * @param showStateTF Objecte camp de text.
+     */
+    public void setShowStateTf(TextField showStateTF) {
+        this.showStateTF = showStateTF;
+    }
+
+    /**
+     * Defineix l'objecte camp de text a on mostrar la nota reproduïda pel
+     * teclat virtual.
+     * 
+     * @param showPlayedNoteTF Objecte camp de text.
+     */
+    public void setShowPlayedNoteTf(TextField showPlayedNoteTF) {
+        this.showPlayedNoteTF = showPlayedNoteTF;
     }
     //</editor-fold>
     

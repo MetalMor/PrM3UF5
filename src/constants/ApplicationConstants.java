@@ -24,7 +24,7 @@ public class ApplicationConstants {
     /**
      * Títol de la finestra del programa.
      */
-    public static final String TITLE = "Banana FXylophone!";
+    public static final String TITLE = "BANANA FXylophone!";
     
     /**
      * Nom del fitxer que guarda la vista.
@@ -40,6 +40,19 @@ public class ApplicationConstants {
      * Nom del fitxer que guarda la icona de la barra de tasques/finestra.
      */
     public static final String ICON_FILE = "icon.png";
+    
+    /**
+     * Missatge mostrat quan l'aplicació està preparada per funcionar.
+     */
+    public static final String READY_MESSAGE = "Aplicació preparada.";
+    
+    public static final String RECORDING_MESSAGE = "Inici de la gravació.";
+    
+    public static final String STOP_RECORDING_MESSAGE = "Fi de la gravació.";
+    
+    public static final String PLAYING_MESSAGE = "Inici de la reproducció.";
+    
+    public static final String END_PLAYING_MESSAGE = "Fi de la reproducció.";
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Constants per a l'ús de fitxers XML.">
