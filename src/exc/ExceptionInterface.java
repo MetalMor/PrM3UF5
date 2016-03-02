@@ -12,7 +12,7 @@ public interface ExceptionInterface {
     /**
      * Retorna la cadena d'error de l'excepció.
      * 
-     * @return Cadena (String) de l'error.
+     * @return Cadena de l'error.
      */
     public String getError();
     

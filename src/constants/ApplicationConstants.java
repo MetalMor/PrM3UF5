@@ -46,7 +46,7 @@ public class ApplicationConstants {
     
     //<editor-fold defaultstate="collapsed" desc="Constants per a l'ús de fitxers XML.">
     /**
-     * Nom per defecte del fitxer XML a on guardar els objectes Note.
+     * Nom per defecte del fitxer XML a on guardar els objectes <code>Note</code>.
      */
     public static final String DEFAULT_FILENAME = "newMidiTrack";
     
@@ -67,19 +67,19 @@ public class ApplicationConstants {
     public static final String SOUNDFILE_ELEMENT = "SoundFile";
     
     /**
-     * Element corresponent a un objecte de classe Note.
+     * Element corresponent a un objecte de classe <code>Note</code>.
      */
     public static final String NOTE_ELEMENT = "Note";
     
     /**
      * Element corresponent a l'atribut value d'un objecte de classe
-     * Note.
+     * <code>Note</code>.
      */
     public static final String VALUE_ELEMENT = "Value";
     
     /**
      * Element corresponent a l'atribut timestamp d'un objecte de classe
-     * Note.
+     * <code>Note</code>.
      */
     public static final String TIMESTAMP_ELEMENT = "Timestamp";
     //</editor-fold>
@@ -111,8 +111,8 @@ public class ApplicationConstants {
     public static final String END_PLAYING_MESSAGE = "Fi de la reproducció.";
     
     /**
-     * Text per mostrar al TextField a on introduir el nom del fitxer XML per
-     * guardar cadascun dels objectes Note.
+     * Text per mostrar al <code>TextField</code> a on introduir el nom del 
+     * fitxer XML per guardar cadascun dels objectes Note.
      */
     public static final String TF_FILE_PROMPT = "Fitxer...";
     //</editor-fold>

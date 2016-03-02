@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 //</editor-fold>
 
 /**
- * Classe que hereta d'Application. Per executar el programa del xilòfon.
+ * Classe que hereta d'<code>Application</code>. Per executar el programa del
+ * xilòfon.
  *
  * @version 220116
  * @author mor
@@ -23,7 +24,7 @@ public class FXylophone extends Application {
     /**
      * Mètode principal de l'aplicació.
      *
-     * @param args Array d'arguments de la classe String.
+     * @param args Array d'arguments de la classe <code>String</code>.
      */
     public static void main(String[] args) {
         Application.launch(FXylophone.class, args);
@@ -54,6 +55,6 @@ public class FXylophone extends Application {
         }
         
     }
-//</editor-fold>
+    //</editor-fold>
     
 }

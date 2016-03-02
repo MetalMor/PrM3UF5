@@ -56,7 +56,7 @@ public abstract class Note implements Comparable {
      * Retorna un valor enter negatiu, positiu o zero en funció de
      * l'ordre esperat de les notes.
      *
-     * @param o Objecte amb el qual comparar-se
+     * @param o Objecte amb el qual comparar-se.
      * @return Valor negatiu si l'objecte en qüestió es troba abans que l'altre,
      * positiu en cas contrari i 0 si van a la mateixa posició (cosa impossible, 
      * per cert).
@@ -105,7 +105,8 @@ public abstract class Note implements Comparable {
      * Funció per obtenir el moment en milisegons de la reproducció d'una nota.
      *
      * @return Valor long del temps en milisegons entre el moment de
-     * l'execució del programa i la instància de l'objecte Note reproduït.
+     * l'execució del programa i la instància de l'objecte <code>Note</code> 
+     * reproduït.
      */
     public abstract long getPlayedTime();
     
@@ -123,6 +124,13 @@ public abstract class Note implements Comparable {
         return 2*Integer.parseInt(key) + ApplicationConstants.DEF_NOTE_VALUE;
     }
     
+    /**
+     * Funció per obtenir la clau <code>String</code> corresponent al teclat
+     * a partir del valor numèric d'una nota.
+     * 
+     * @param value Valor enter de la nota.
+     * @return Clau <code>String</code> de l'índex de la tecla corresponent.
+     */
     public static String noteKeyFromValue(int value) {
         return String.valueOf((value - ApplicationConstants.DEF_NOTE_VALUE)/2);
     }

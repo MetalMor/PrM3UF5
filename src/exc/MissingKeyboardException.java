@@ -19,6 +19,7 @@ public class MissingKeyboardException extends Exception implements ExceptionInte
         super(error);
     }
     
+    @Override
     public String getError() {
         return error;
     }

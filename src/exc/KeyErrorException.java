@@ -19,6 +19,7 @@ public class KeyErrorException extends Exception implements ExceptionInterface {
         super(error);
     }
     
+    @Override
     public String getError() {
         return error;
     }

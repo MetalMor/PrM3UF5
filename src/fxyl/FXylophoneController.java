@@ -6,15 +6,11 @@ import exc.InvalidFileNameException;
 import exc.KeyErrorException;
 import exc.MissingKeyboardException;
 import exc.WrongNoteException;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javax.imageio.ImageIO;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -53,7 +48,7 @@ public class FXylophoneController implements Initializable {
      */
     private Synthesizer syn;
     /**
-     * Array d'instruments MIDI extrets del Soundbank per defecte.
+     * Array d'instruments MIDI extrets del <code>Soundbank</code> per defecte.
      */
     private Instrument[] instr;
     /**
@@ -66,7 +61,7 @@ public class FXylophoneController implements Initializable {
     /**
      * Propietat que representa el teclat del xilòfon.
      * Cadascuna de les tecles del xilòfon és un objecte diferent que queda
-     * recollit a l'estructura de dades keyboard de tipus ArrayList.
+     * recollit a l'estructura de dades keyboard de tipus <code>ArrayList</code>.
      */
     private List<Rectangle> keyboard = new ArrayList<>();
     /**
@@ -125,17 +120,17 @@ public class FXylophoneController implements Initializable {
 
     //<editor-fold defaultstate="collapsed" desc="Propietats de control de gravació/reproducció.">
     /**
-     * Objecte encarregat de gestionar la inserció i extracció d'objectes Note
+     * Objecte encarregat de gestionar la inserció i extracció d'objectes <code>Note</code>
      * a un fitxer XML.
      */
     private FXylophoneXML xmlNoteRecorder;
     /**
-     * Estructura de dades a on guardar els objectes Note, preparats per ser
+     * Estructura de dades a on guardar els objectes <code>Note</code>, preparats per ser
      * inserits a un fitxer XML.
      */
     private static NoteList<Note> noteList;
     /**
-     * Propietat que allotja temporalment el valor de la nota per reproduir-la.
+     * Propietat que guarda temporalment el valor de la nota per reproduir-la.
      */
     private int key;
     /**
@@ -159,17 +154,17 @@ public class FXylophoneController implements Initializable {
     
     //<editor-fold defaultstate="collapsed" desc="Objectes de la interfície de l'usuari.">
     /**
-     * Botó per reproduir els objectes Note desats a un fitxer XML.
+     * Botó per reproduir els objectes <code>Note</code> desats a un fitxer XML.
      */
     @FXML private Button play;
     /**
-     * Botó per iniciar la inserció d'objectes Note a l'ArrayList que servirà
+     * Botó per iniciar la inserció d'objectes <code>Note</code> a l'<code>ArrayList</code> que servirà
      * per desar les dades a un fitxer XML.
      */
     @FXML private Button record;
     /**
      * Botó per parar la gravació i guardar totes les dades de l'objecte
-     * ArrayList a un fitxer XML.
+     * <code>ArrayList</code> a un fitxer XML.
      */
     @FXML private Button stopRecord;
     
@@ -187,7 +182,7 @@ public class FXylophoneController implements Initializable {
     
     /**
      * Camp de text a on es mostra el fitxer utilitzat per l'intercanvi de
-     * dades d'objectes Note.
+     * dades d'objectes <code>Note</code>.
      */
     @FXML private TextField showStateTF;
     
@@ -197,7 +192,7 @@ public class FXylophoneController implements Initializable {
     @FXML private TextField showPlayedNoteTF;
     //</editor-fold>
     
-    // MÈTODES
+//     MÈTODES
     
     //<editor-fold defaultstate="collapsed" desc="Inicialització del controlador i la interfície de l'usuari.">
     /**
@@ -211,12 +206,12 @@ public class FXylophoneController implements Initializable {
         try {
             
             setSyn(MidiSystem.getSynthesizer());
-            syn.loadAllInstruments(syn.getDefaultSoundbank());
-            setMc(syn.getChannels());
-            syn.open();
+            getSyn().loadAllInstruments(getSyn().getDefaultSoundbank());
+            setMc(getSyn().getChannels());
+            getSyn().open();
             loadKeyBoard();
             loadButtons();
-            //setImage(initImage());
+            
         } catch (MissingKeyboardException mkEx) {
             showInfo(mkEx.getError(), getShowStateTf());
         } catch (Exception ex) {
@@ -230,42 +225,35 @@ public class FXylophoneController implements Initializable {
     /**
      * Funció per afegir les tecles al teclat.
      * Prova d'afegir els objectes del teclat a la seva corresponent estructura
-     * de dades ArrayList i retorna true. En cas que algun dels
+     * de dades <code>ArrayList</code> i retorna true. En cas que algun dels
      * objectes no s'hi pugui afegir, retorna false.
      *
-     * @return boolean
+     * @return boolean (true si la inicialització ha sigut correcta).
      */
     public boolean addKeysToKeyboard() {
         
-        if(keyboard.add(rect01) &&
-                keyboard.add(rect02) &&
-                keyboard.add(rect03) &&
-                keyboard.add(rect04) &&
-                keyboard.add(rect05) &&
-                keyboard.add(rect06) &&
-                keyboard.add(rect07) &&
-                keyboard.add(rect08) &&
-                keyboard.add(rect09) &&
-                keyboard.add(rect10) &&
-                keyboard.add(rect11) &&
-                keyboard.add(rect12))
+        if(getKeyboard().add(rect01) &&
+                getKeyboard().add(rect02) &&
+                getKeyboard().add(rect03) &&
+                getKeyboard().add(rect04) &&
+                getKeyboard().add(rect05) &&
+                getKeyboard().add(rect06) &&
+                getKeyboard().add(rect07) &&
+                getKeyboard().add(rect08) &&
+                getKeyboard().add(rect09) &&
+                getKeyboard().add(rect10) &&
+                getKeyboard().add(rect11) &&
+                getKeyboard().add(rect12))
             return true;
         
         return false;
         
     }
     
-    private Image initImage() throws IOException {
-        BufferedImage bi;
-        bi = ImageIO.read(new File(ApplicationConstants.PEANUT_BUTTER_JELLY_TIME_FILE));
-        Image img = SwingFXUtils.toFXImage(bi, null);
-        return img;
-    }
-    
     /**
      * Funció de càrrega del teclat.
      * Carrega els objectes que formen part del teclat a la propietat keyboard
-     * en forma d'una estructura de dades de tipus ArrayList.
+     * en forma d'una estructura de dades de tipus <code>ArrayList</code>.
      *
      * @throws exc.MissingKeyboardException en cas que hi hagi un error a l'hora
      * de vincular els diferents objectes del teclat.
@@ -277,7 +265,7 @@ public class FXylophoneController implements Initializable {
         
         setNoteList(new NoteList<>());
         
-        for (Rectangle rect : keyboard) {
+        for (Rectangle rect : getKeyboard()) {
             rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 
                 @Override
@@ -314,7 +302,7 @@ public class FXylophoneController implements Initializable {
         setXmlNoteRecorder(new FXylophoneXML());
         setRecording(false);
         
-        record.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        getRecord().setOnMouseClicked(new EventHandler<MouseEvent>() {
             
             @Override
             public void handle(MouseEvent me) {
@@ -330,7 +318,7 @@ public class FXylophoneController implements Initializable {
             
         });
         
-        stopRecord.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        getStopRecord().setOnMouseClicked(new EventHandler<MouseEvent>() {
             
             @Override
             public void handle(MouseEvent me) {
@@ -342,7 +330,7 @@ public class FXylophoneController implements Initializable {
             
         });
         
-        play.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        getPlay().setOnMouseClicked(new EventHandler<MouseEvent>() {
             
             @Override
             public void handle(MouseEvent me) {
@@ -355,7 +343,7 @@ public class FXylophoneController implements Initializable {
                         setFileNameFromTf();
                     } catch (InvalidFileNameException ifnEx) {
                         showInfo(ifnEx.getError(), getShowStateTf());
-                        xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
+                        getXmlNoteRecorder().setFileName(ApplicationConstants.DEFAULT_FILENAME);
                     } finally {
                         playNotesFromXMLList();
                         setPlaying(false);
@@ -382,12 +370,18 @@ public class FXylophoneController implements Initializable {
         this.recordControl = getRecordControl();
         
         if (recording)
-            recordControl.setFill(Color.RED);
+            getRecordControl().setFill(Color.RED);
         else
-            recordControl.setFill(Color.GREY);
+            getRecordControl().setFill(Color.GREY);
         
     }
     
+    /**
+     * Mostra una informació determinada a un camp de text especificat.
+     * 
+     * @param data Informació a mostrar.
+     * @param out Objecte <code>TextField</code> que fa de sortida.
+     */
     private void showInfo(String data, TextField out) {
         out.setText(data);
     }
@@ -404,12 +398,12 @@ public class FXylophoneController implements Initializable {
         String fileName = getFileNameTf().getText();
         
         if (!fileName.equals(ApplicationConstants.VOID_STRING))
-            xmlNoteRecorder.setFileName(fileName);
+            getXmlNoteRecorder().setFileName(fileName);
         else {
             throw new InvalidFileNameException();
         }
         
-        System.out.println("Nom del fitxer: " + xmlNoteRecorder.getFileName());
+        System.out.println("Nom del fitxer: " + getXmlNoteRecorder().getFileName());
         
     }
     
@@ -426,7 +420,7 @@ public class FXylophoneController implements Initializable {
     public void idToKey(String key) throws KeyErrorException {
         
         int newKey = Note.noteValueFromKey(key);
-        int oldKey = this.key;
+        int oldKey = this.getKey();
         setKey(newKey);
         
         if (oldKey == newKey)
@@ -443,7 +437,7 @@ public class FXylophoneController implements Initializable {
      */
     public void playNote() {
         
-        Note n = new NoteImpl(key);
+        Note n = new NoteImpl(getKey());
         
         if (isRecording()) {
             noteList.add(n);
@@ -462,14 +456,14 @@ public class FXylophoneController implements Initializable {
     private void playNotesFromXMLList() {
         try {
             showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
-            NoteList<Note> noteList = (NoteList<Note>) xmlNoteRecorder.XMLtoNotes();
+            NoteList<Note> noteList = (NoteList<Note>) getXmlNoteRecorder().XMLtoNotes();
             setNoteList(noteList);
             setFileNameFromTf();
         } catch (WrongNoteException wnEx) {
             showInfo(wnEx.getError(), getShowStateTf());
         } catch (InvalidFileNameException ifnEx) {
             showInfo(ifnEx.getError(), getShowStateTf());
-            xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
+            getXmlNoteRecorder().setFileName(ApplicationConstants.DEFAULT_FILENAME);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -486,13 +480,13 @@ public class FXylophoneController implements Initializable {
     private void noteSaving() {
         setRecording(false);
         try {
-            xmlNoteRecorder.setNoteRecording(noteList);
+            getXmlNoteRecorder().setNoteRecording(noteList);
             setFileNameFromTf();
         } catch (InvalidFileNameException ifnEx) {
             showInfo(ifnEx.getError(), getShowStateTf());
-            xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
+            getXmlNoteRecorder().setFileName(ApplicationConstants.DEFAULT_FILENAME);
             try {
-                xmlNoteRecorder.notesToXML();
+                getXmlNoteRecorder().notesToXML();
             } catch (WrongNoteException wnEx) {
                 showInfo(wnEx.getError(), getShowStateTf());
             } catch (Exception ex) {
@@ -502,7 +496,7 @@ public class FXylophoneController implements Initializable {
             ex.printStackTrace();
         } finally {
             try {
-                xmlNoteRecorder.notesToXML();
+                getXmlNoteRecorder().notesToXML();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -541,7 +535,7 @@ public class FXylophoneController implements Initializable {
      */
     private void sound(Note note){
     
-         mc[ApplicationConstants.MIDICHANNEL]
+         getMc(ApplicationConstants.MIDICHANNEL)
                  .noteOn(note.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
          // TODO textfield 
          showInfo(note.getPlayedKey(), getShowPlayedNoteTF());
@@ -551,10 +545,21 @@ public class FXylophoneController implements Initializable {
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Getters i setters.">
+    
+    /**
+     * Retorna la posició especificada de l'array de canals de MIDI.
+     * 
+     * @param pos Valor enter de la posició requerida de l'array.
+     * @return Objecte <code>MidiChannel</code> trobat a la posició requerida.
+     */
+    public MidiChannel getMc(int pos) {
+        return mc[pos];
+    }
+    
     /**
      * Retorna el sintetitzador de l'API MIDI.
      * 
-     * @return Objecte de la classe Synthesizer.
+     * @return Objecte de la classe <code>Synthesizer</code>.
      */
     public Synthesizer getSyn() {
         return syn;
@@ -567,15 +572,6 @@ public class FXylophoneController implements Initializable {
      */
     public Instrument[] getInstr() {
         return instr;
-    }
-    
-    /**
-     * Retorna l'array de canals de l'API MIDI.
-     * 
-     * @return Array d'objectes de la classe MidiChannel
-     */
-    public MidiChannel[] getMc() {
-        return mc;
     }
     
     /**
@@ -618,8 +614,8 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Retorna l'estructura de dades que guarda objectes Note per gravar i
-     * reproduir.
+     * Retorna l'estructura de dades que guarda objectes <code>Note</code> per 
+     * gravar i reproduir.
      * 
      * @return Llista d'objectes de la classe Note.
      */
@@ -628,11 +624,11 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Retorna l'objecte enregistrador/reproductor d'objectes Note en fitxers 
-     * XML.
+     * Retorna l'objecte enregistrador/reproductor d'objectes <code>Note</code> 
+     * en fitxers XML.
      * 
      * @return Objecte controlador dels fitxers XML on es guarden les dades
-     * dels objectes de la classe Note gravats.
+     * dels objectes de la classe <code>Note</code> gravats.
      */
     public FXylophoneXML getXmlNoteRecorder() {
         return xmlNoteRecorder;
@@ -651,17 +647,53 @@ public class FXylophoneController implements Initializable {
     /**
      * Retorna la imatge mostrada per la vista.
      * 
-     * @return Objecte de la classe Image mostrat per la vista.
+     * @return Objecte de la classe <code>Image</code> mostrat per la vista.
      */
     public Image getImage() {
         return image.getImage();
     }
 
     /**
+     * Retorna la llista d'objectes que formen el teclat virtual.
+     * 
+     * @return Llista d'objectes de la classe <code>Rectangle</code>.
+     */
+    public List<Rectangle> getKeyboard() {
+        return keyboard;
+    }
+    
+    /**
+     * Retorna el botó per començar a gravar.
+     * 
+     * @return Objecte de la classe <code>Button</code>.
+     */
+    private Button getRecord() {
+        return record;
+    }
+
+    /**
+     * Retorna el botó per parar de gravar.
+     * 
+     * @return Objecte de la classe <code>Button</code>.
+     */
+    private Button getStopRecord() {
+        return stopRecord;
+    }
+
+    /**
+     * Retorna el botó per reproduir un fitxer XML.
+     * 
+     * @return Objecte de la classe <code>Button</code>.
+     */
+    private Button getPlay() {
+        return play;
+    }
+    
+    /**
      * Retorna l'objecte que fa d'indicador per saber si l'aplicació es troba
      * en procés de gravació de notes. En cas que no existeixi, el crea.
      * 
-     * @return Objecte indicador de la classe Circle.
+     * @return Objecte indicador de la classe <code>Circle</code>.
      */
     public Circle getRecordControl() {
         if (recordControl == null)
@@ -669,6 +701,12 @@ public class FXylophoneController implements Initializable {
         return recordControl;
     }
     
+    /**
+     * Retorna l'objecte camp de text per escriure el nom del fitxer XML amb
+     * el què l'aplicació treballarà.
+     * 
+     * @return Objecte de la classe <code>TextField</code>.
+     */
     public TextField getFileNameTf() {
         if (fileNameTF == null)
             fileNameTF = new TextField();
@@ -679,7 +717,7 @@ public class FXylophoneController implements Initializable {
      * Retorna l'objecte camp de text a on mostrar l'estat de l'aplicació.
      * En cas que no existeixi, el crea.
      * 
-     * @return Objecte camp de text.
+     * @return Objecte de la classe <code>TextField</code>.
      */
     public TextField getShowStateTf() {
         if (showStateTF == null)
@@ -691,7 +729,7 @@ public class FXylophoneController implements Initializable {
      * Retorna l'objecte camp de text a on mostrar la nota reproduïda pel 
      * teclat virtual. En cas que no existeixi, el crea.
      * 
-     * @return Objecte camp de text.
+     * @return Objecte de la classe <code>TextField</code>.
      */
     public TextField getShowPlayedNoteTF() {
         if (showPlayedNoteTF == null)
@@ -702,7 +740,7 @@ public class FXylophoneController implements Initializable {
     /**
      * Defineix l'objecte sintetitzador de l'API MIDI.
      * 
-     * @param syn Objecte de la classe Synthesizer.
+     * @param syn Objecte de la classe <code>Synthesizer</code>.
      */
     public void setSyn(Synthesizer syn) {
         this.syn = syn;
@@ -711,7 +749,7 @@ public class FXylophoneController implements Initializable {
     /**
      * Defineix el vector d'instruments de l'API MIDI.
      * 
-     * @param instr Array d'objectes de la classe Instrument.
+     * @param instr Array d'objectes de la classe <code>Instrument</code>.
      */
     public void setInstr(Instrument[] instr) {
         this.instr = instr;
@@ -720,7 +758,7 @@ public class FXylophoneController implements Initializable {
     /**
      * Defineix el vector de canals de l'API MIDI.
      * 
-     * @param mc Array d'objectes de la classe MidiChannel.
+     * @param mc Array d'objectes de la classe <code>MidiChannel</code>.
      */
     public void setMc(MidiChannel[] mc) {
         this.mc = mc;
@@ -738,10 +776,10 @@ public class FXylophoneController implements Initializable {
     /**
      * Defineix la llista de notes per gravar/reproduir.
      * 
-     * @param noteRecording Estructura de dades List d'objectes de la classe
-     * Note.
+     * @param noteRecording Estructura de dades <code>List</code> d'objectes de 
+     * la classe Note.
      */
-    public static void setNoteList(NoteList<Note> noteRecording) {
+    public void setNoteList(NoteList<Note> noteRecording) {
         FXylophoneController.noteList = noteRecording;
     }
     
@@ -767,7 +805,7 @@ public class FXylophoneController implements Initializable {
      * ha començat a gravar.
      */
     public void setRecordTime(long recordTime) {
-        this.recordTime = recordTime;
+        FXylophoneController.recordTime = recordTime;
     }
     
     /**
@@ -781,11 +819,11 @@ public class FXylophoneController implements Initializable {
     }
     
     /**
-     * Defineix l'objecte enregistrador/reproductor d'objectes Note en fitxers
-     * XML.
+     * Defineix l'objecte enregistrador/reproductor d'objectes <code>Note</code>
+     * en fitxers XML.
      * 
      * @param xmlToNote Objecte controlador dels fitxers XML on es guarden les dades
-     * dels objectes de la classe Note gravats.
+     * dels objectes de la classe <code>Note</code> gravats.
      */
     private void setXmlNoteRecorder(FXylophoneXML xmlToNote) {
         this.xmlNoteRecorder = xmlToNote;
@@ -814,7 +852,7 @@ public class FXylophoneController implements Initializable {
      * Defineix l'objecte que farà d'indicador per saber si l'aplicació
      * està en procés de gravació de notes.
      * 
-     * @param recordControl Objecte indicador de la classe Circle.
+     * @param recordControl Objecte indicador de la classe <code>Circle</code>.
      */
     public void setRecordControl(Circle recordControl) {
         this.recordControl = recordControl;

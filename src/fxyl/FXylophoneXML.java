@@ -96,9 +96,9 @@ public class FXylophoneXML {
     }
 
     /**
-     * Funció Note a XML.
-     * Guarda les dades d'un conjunt d'objectes Note en un document XML
-     * utilitzant l'API DOM.
+     * Funció <code>Note</code> a XML.
+     * Guarda les dades d'un conjunt d'objectes <code>Note</code> en un document
+     * XML utilitzant l'API DOM.
      *
      * @throws ParserConfigurationException en cas d'error de configuració.
      * @throws WrongNoteException en cas de trobar una incoherència en un
@@ -122,8 +122,8 @@ public class FXylophoneXML {
 
             /**
              * Si no és una nota de MIDI, llença una excepció. No té sentit perquè
-             * només s'utilitzen objectes de la classe Note en aquest programa, però
-             * em feia il·lusió posar aquesta excepció :D
+             * només s'utilitzen objectes de la classe <code>Note</code> en 
+             * aquest programa, però em feia il·lusió posar aquesta excepció :D
              */
             if(!(note instanceof Note))
                 throw new WrongNoteException();
@@ -147,6 +147,13 @@ public class FXylophoneXML {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Mètodes XML -> Note.">
+    /**
+     * La nota passada per paràmetre queda enregistrada a una estructura de
+     * dades de tipus <code>List</code>.
+     * 
+     * @param n Objecte de la classe <code>Note</code>.
+     * @return Valor booleà que indica si l'objecte s'ha guardat correctament.
+     */
     public boolean recordNote(Note n) {
 
         System.out.println("XMLtoNote");
@@ -161,15 +168,15 @@ public class FXylophoneXML {
     /**
      * Funció per extreure un conjunt de notes d'un fitxer XML.
      * Per reproduir les notes guardades a un arxiu XML s'han de desar en una
-     * llista d'objectes Note.
+     * llista d'objectes <code>Note</code>.
      *
-     * @return La llista d'objectes de la classe Note construits a partir de les
-     * dades d'un fitxer XML.
+     * @return La llista d'objectes de la classe <code>Note</code> construits a 
+     * partir de les dades d'un fitxer XML.
      * @throws IOException si hi ha un error d'entrada/sortida de dades.
      * @throws SAXException si hi ha un error amb l'API SAX.
      * @throws ParserConfigurationException en cas d'error de configuració.
      * @throws WrongNoteException en cas de trobar una incoherència en un
-     * objecte Note.
+     * objecte <code>Note</code>.
      */
     public List<Note> XMLtoNotes() throws IOException, SAXException,
             ParserConfigurationException, WrongNoteException {
@@ -211,8 +218,9 @@ public class FXylophoneXML {
     /**
      * Funció per recuperar el valor d'un node XML.
      *
-     * @param etiqueta Node que desitgem extreure de l'XML.
-     * @param element Element a on cercar el node
+     * @param etiqueta Valor <code>String</code> del node que desitgem extreure 
+     * de l'XML.
+     * @param element Objecte <code>Element</code> a on cercar el node.
      * @return El valor del node en forma de String.
      */
     private static String getContent(String etiqueta, Element element) {
@@ -224,19 +232,19 @@ public class FXylophoneXML {
 
     //<editor-fold defaultstate="collapsed" desc="Getters i setters">
     /**
-     * Retorna l'estructura de dades que guarda objectes Note per gravar i
-     * reproduir.
+     * Retorna l'estructura de dades que guarda objectes <code>Note</code> per 
+     * gravar i reproduir.
      *
-     * @return Llista d'objectes de la classe Note.
+     * @return Llista d'objectes de la classe <code>Note</code>.
      */
     public List<Note> getNoteRecording() {
         return noteList;
     }
 
     /**
-     * Retorna el comparador d'objectes Note.
+     * Retorna el comparador d'objectes <code>Note</code>.
      *
-     * @return Objecte que implementa Comparator.
+     * @return Objecte que implementa <code>Comparator</code>.
      */
     public NoteComparator getNc() {
         return nc;
@@ -245,7 +253,7 @@ public class FXylophoneXML {
     /**
      * Retorna el nom del fitxer per guardar/reproduir.
      *
-     * @return String del nom del fitxer XML (sense extensió).
+     * @return Valor <code>String</code> del nom del fitxer XML (sense extensió).
      */
     public String getFileName() {
         return fileName;
@@ -254,16 +262,16 @@ public class FXylophoneXML {
     /**
      * Defineix l'objecte llista de notes.
      *
-     * @param noteRecording Llista d'objectes de la classe Note.
+     * @param noteRecording Llista d'objectes de la classe <code>Note</code>.
      */
     public void setNoteRecording(NoteList<Note> noteRecording) {
         this.noteList = noteRecording;
     }
 
     /**
-     * Defineix el comparador d'objectes Note.
+     * Defineix el comparador d'objectes <code>Note</code>.
      *
-     * @param nc Objecte que implementa Comparator.
+     * @param nc Objecte que implementa <code>Comparator</code>.
      */
     public void setNc(NoteComparator nc) {
         this.nc = nc;
@@ -272,7 +280,8 @@ public class FXylophoneXML {
     /**
      * Defineix el nom del fitxer per guardar/reproduir notes.
      *
-     * @param fileName String del nom del fitxer XML (sense extensió).
+     * @param fileName Valor <code>String</code> del nom del fitxer XML (sense 
+     * extensió).
      */
     public void setFileName(String fileName) {
         this.fileName = fileName + ApplicationConstants.EXT;
