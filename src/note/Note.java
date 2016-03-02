@@ -76,7 +76,7 @@ public abstract class Note implements Comparable {
     }
     
     /**
-     * Retorna l'objecte en forma de String (per debugar). 
+     * Retorna l'objecte en forma de <code>String</code> (per debugar). 
      *
      * @return Cadena amb les propietats de l'objecte llistades.
      */
