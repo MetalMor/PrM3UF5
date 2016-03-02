@@ -78,9 +78,6 @@ public class FXylophoneXML {
 
         Element note = doc.createElement(ApplicationConstants.NOTE_ELEMENT);
 
-        /**
-         * Elements fills de <Note>
-         */
         Element value = doc.createElement(ApplicationConstants.VALUE_ELEMENT);
         value.appendChild(
                 doc.createTextNode(Integer.toString(n.getValue())));
@@ -109,7 +106,7 @@ public class FXylophoneXML {
     public void notesToXML() throws ParserConfigurationException,
             WrongNoteException, TransformerException {
 
-        noteList.sort(nc);
+        noteList.sort(getNc());
 
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -139,7 +136,7 @@ public class FXylophoneXML {
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transf = tf.newTransformer();
         DOMSource orig = new DOMSource(docNode);
-        StreamResult outXML = new StreamResult(new File(this.fileName));
+        StreamResult outXML = new StreamResult(new File(this.getFileName()));
 
         transf.transform(orig, outXML);
 

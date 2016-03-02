@@ -23,7 +23,6 @@ Circle {
 
 
 Rectangle:hover { 
-    
     -fx-cursor: hand;
     -fx-opacity: 1.0;
 }
@@ -31,7 +30,6 @@ Rectangle:hover {
 Rectangle:pressed {
     -fx-stroke-type: inside;
     -fx-stroke-width: 3;
-    
 }
 
 Rectangle#1 {
@@ -97,14 +95,12 @@ TextArea{
 }
 
 GridPane{
-    -fx-background-image:url(background1_1.jpg);
+    -fx-background-image:url(background_menu.jpg);
     -fx-border-style:solid ;
     -fx-border-color:black;
     -fx-border-radius: 10px;
 }
 
 AnchorPane{
-     -fx-background-image:url(background.jpg);
-    
-    
+     -fx-background-image:url(background_global.jpg);
 }

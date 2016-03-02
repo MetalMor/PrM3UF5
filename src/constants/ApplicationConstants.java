@@ -14,12 +14,12 @@ public class ApplicationConstants {
     /**
      * Amplada de la finestra.
      */
-    public static final int W_WIDTH = 1200;
+    public static final int W_WIDTH = 1000;
     
     /**
      * Alçada de la finestra.
      */
-    public static final int W_HEIGHT = 1000;
+    public static final int W_HEIGHT = 900;
     
     /**
      * Títol de la finestra del programa.

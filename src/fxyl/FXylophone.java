@@ -48,7 +48,7 @@ public class FXylophone extends Application {
             stage.setTitle(ApplicationConstants.TITLE);
             stage.setScene(new Scene(arrel, ApplicationConstants.W_WIDTH, ApplicationConstants.W_HEIGHT));
             stage.getIcons().add(new Image(FXylophone.class.getResourceAsStream(ApplicationConstants.ICON_FILE)));
-            stage.getIcons().add(new Image(FXylophone.class.getResourceAsStream("view/icon.png")));
+            //stage.getIcons().add(new Image(FXylophone.class.getResourceAsStream("view/icon.png")));
             stage.show();
             
         } catch (IOException ex) {
