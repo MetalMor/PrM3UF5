@@ -2,7 +2,10 @@ package note;
 
 //<editor-fold defaultstate="collapsed" desc="Imports.">
 import constants.ApplicationConstants;
+import constants.NoteConstants;
 import fxyl.FXylophoneController;
+import java.util.HashMap;
+import java.util.Map;
 //</editor-fold>
 
 
@@ -37,7 +40,7 @@ public class NoteImpl extends Note {
         long recordTime = FXylophoneController.getRecordTime();
         long noteTime = currentTime - recordTime;
         
-        /* PER DEBUGAR
+        /* DEBUG
         System.out.println("Actual: " + currentTime/1000);
         System.out.println("Programa: " + recordTime/1000);
         System.out.println("Nota: " + noteTime/1000);

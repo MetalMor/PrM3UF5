@@ -52,9 +52,9 @@ public class NoteConstants {
     /**
      * Nota Si
      */
-    public static final String Si_NUMB = "7";
+    public static final String SI_NUMB = "7";
 
-    public static final String Si_STR = "Si";
+    public static final String SI_STR = "Si";
 
     /**
      * Nota DoMayor
@@ -67,30 +67,30 @@ public class NoteConstants {
     /**
      * Nota Si Menor
      */
-    public static final String Si2_NUMB = "9";
+    public static final String RE2_NUMB = "9";
 
-    public static final String Si2_STR = "Si 2";
+    public static final String RE2_STR = "Re 2";
 
     /**
      * Nota La Menor
      */
-    public static final String LA2_NUMB = "10";
+    public static final String MI2_NUMB = "10";
 
-    public static final String LA2_STR = "La 2";
+    public static final String MI2_STR = "Mi 2";
 
     /**
      * Nota Sol Menor
      */
-    public static final String SOL2_NUMB = "11";
+    public static final String FA2_NUMB = "11";
 
-    public static final String SOL2_STR = "Sol 2";
+    public static final String FA2_STR = "Fa 2";
     
      /**
      * Nota Sol Menor
      */
-    public static final String FA2_NUMB = "12";
+    public static final String SOL2_NUMB = "12";
 
-    public static final String FA2_STR = "Fa 2";
+    public static final String SOL2_STR = "Sol 2";
 
 
 }

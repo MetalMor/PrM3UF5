@@ -1,6 +1,9 @@
 package note;
 
 import constants.ApplicationConstants;
+import constants.NoteConstants;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe que representa una nota reproduïda pel programa.
@@ -22,6 +25,11 @@ public abstract class Note implements Comparable {
      * Temps en milisegons des de la data UNIX fins a la reproducció de la nota.
      */
     private long timestamp;
+    
+    /**
+     * Estructura que conté les equivalències de notes i tecles.
+     */
+    private static Map<String, String> noteEqv;
     //</editor-fold>
     
     // MÈTODES
@@ -82,11 +90,7 @@ public abstract class Note implements Comparable {
      */
     @Override
     public String toString() {
-        String noteToString = new StringBuilder()
-                .append("Note{\n\t" )
-                .append("note=").append(getPlayedKey()).append("\n\t")
-                .append("timestamp=").append(getTimestamp()/*getPlayedTime()*/)
-                .append("\n}\n").toString();
+        String noteToString = noteEqv.get(this.getPlayedKey());
         return noteToString;
     }
     //</editor-fold>
@@ -100,6 +104,32 @@ public abstract class Note implements Comparable {
      * en qüestió.
      */
     public abstract String getPlayedKey();
+    
+    /**
+     * Funció que inicialitza l'estructura de tipus <code>Map</code> que conté 
+     * les equivalències entre el valor de cada tecla al teclat virtual i la 
+     * seva nota corresponent.
+     */
+    public static void initNoteMap() {
+        
+        Map<String, String> noteEqvTemp = new HashMap<>();
+        
+        noteEqvTemp.put(NoteConstants.DO_NUMB, NoteConstants.DO_STR);
+        noteEqvTemp.put(NoteConstants.RE_NUMB, NoteConstants.RE_STR);
+        noteEqvTemp.put(NoteConstants.MI_NUMB, NoteConstants.MI_STR);
+        noteEqvTemp.put(NoteConstants.FA_NUMB, NoteConstants.FA_STR);
+        noteEqvTemp.put(NoteConstants.SOL_NUMB, NoteConstants.SOL_STR);
+        noteEqvTemp.put(NoteConstants.LA_NUMB, NoteConstants.LA_STR);
+        noteEqvTemp.put(NoteConstants.SI_NUMB, NoteConstants.SI_STR);
+        noteEqvTemp.put(NoteConstants.DO2_NUMB, NoteConstants.DO2_STR);
+        noteEqvTemp.put(NoteConstants.RE2_NUMB, NoteConstants.RE2_STR);
+        noteEqvTemp.put(NoteConstants.MI2_NUMB, NoteConstants.MI2_STR);
+        noteEqvTemp.put(NoteConstants.FA2_NUMB, NoteConstants.FA2_STR);
+        noteEqvTemp.put(NoteConstants.SOL2_NUMB, NoteConstants.SOL2_STR);
+        
+        setNoteEqv(noteEqvTemp);
+        
+    }
     
     /**
      * Funció per obtenir el moment en milisegons de la reproducció d'una nota.
@@ -156,6 +186,15 @@ public abstract class Note implements Comparable {
     }
     
     /**
+     * Retorna l'estructura d'equivalències de notes i tecles.
+     * 
+     * @return Estructura de tipus <code>Map</code>.
+     */
+    public Map<String, String> getNoteEqv() {
+        return noteEqv;
+    }
+    
+    /**
      * Defineix el valor de la nota.
      *
      * @param value Valor enter de la nota.
@@ -171,6 +210,15 @@ public abstract class Note implements Comparable {
      */
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+    
+    /**
+     * Defineix l'estructura d'equivalències de notes i tecles.
+     * 
+     * @param noteEqv Estructura de tipus <code>Map</code>.
+     */
+    public static void setNoteEqv(Map<String, String> noteEqv) {
+        Note.noteEqv = noteEqv;
     }
     //</editor-fold>
     

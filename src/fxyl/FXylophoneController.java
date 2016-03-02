@@ -199,6 +199,9 @@ public class FXylophoneController implements Initializable {
      * Inicialització de la classe controladora.
      * Inicialitza el controlador amb els requeriments de l'aplicació i l'API 
      * de MIDI.
+     * 
+     * @param url Objecte de la classe <code>URL</code>.
+     * @param rb Objecte de la classe <code>ResourceBundle</code>.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -262,6 +265,8 @@ public class FXylophoneController implements Initializable {
         
         if(!addKeysToKeyboard())
             throw new MissingKeyboardException();
+        
+        Note.initNoteMap();
         
         setNoteList(new NoteList<>());
         
@@ -537,8 +542,7 @@ public class FXylophoneController implements Initializable {
     
          getMc(ApplicationConstants.MIDICHANNEL)
                  .noteOn(note.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
-         // TODO textfield 
-         showInfo(note.getPlayedKey(), getShowPlayedNoteTF());
+         showInfo(note.toString(), getShowPlayedNoteTF());
     
     }
     

@@ -21,174 +21,66 @@ Circle {
     -fx-stroke: BLACK;
 }
 
-Rectangle#1 {
-    -fx-fill: #FF0000;
-}
-Rectangle#1:hover { 
+
+Rectangle:hover { 
     
     -fx-cursor: hand;
     -fx-opacity: 1.0;
 }
 
-Rectangle#1:pressed {
+Rectangle:pressed {
     -fx-stroke-type: inside;
     -fx-stroke-width: 3;
     
+}
+
+Rectangle#1 {
+    -fx-fill: #FF0000;
 }
 Rectangle#2 {
     -fx-fill: #ff3d00;
 }
-Rectangle#2:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#2:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#3 {
     -fx-fill:#ff7a00;
 }
-Rectangle#3:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#3:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#4 {
     -fx-fill: #ffb800;
 }
-Rectangle#4:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#4:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#5 {
     -fx-fill: #ccff00;
 }
-Rectangle#5:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#5:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#6 {
     -fx-fill:#14ff00;
 }
-Rectangle#6:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#6:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#7 {
     -fx-fill: #00ff66;
 }
-Rectangle#7:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#7:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#8 {
     -fx-fill:#66edff;
 }
-Rectangle#8:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#8:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#9 {
     -fx-fill: #0066ff;
 }
-Rectangle#9:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#9:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#10 {
     -fx-fill: #8f00ff;
 }
-Rectangle#10:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#10:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#11 {
     -fx-fill: #cc00c4;
 }
-Rectangle#11:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#11:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#12 {
     -fx-fill: #fff966;
 }
-Rectangle#12:hover { 
-    
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
 
-Rectangle#12:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
-    
-}
 Rectangle#13 { 
     -fx-fill: #808080;
  
@@ -198,14 +90,10 @@ Rectangle#14 {
  
 }
 
-Circle:hover { 
-    -fx-cursor: hand;
-    -fx-opacity: 1.0;
-}
-
-Circle:pressed {
-    -fx-stroke-type: inside;
-    -fx-stroke-width: 3;
+TextArea{
+    -fx-border-style:solid ;
+    -fx-border-color:black;
+    -fx-border-radius: 10px;
 }
 
 GridPane{
