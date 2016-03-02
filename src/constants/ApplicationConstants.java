@@ -112,7 +112,7 @@ public class ApplicationConstants {
     
     /**
      * Text per mostrar al <code>TextField</code> a on introduir el nom del 
-     * fitxer XML per guardar cadascun dels objectes Note.
+     * fitxer XML per guardar cadascun dels objectes <code>Note</code>.
      */
     public static final String TF_FILE_PROMPT = "Fitxer...";
     //</editor-fold>
