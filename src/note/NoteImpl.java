@@ -26,8 +26,8 @@ public class NoteImpl extends Note {
 
     //<editor-fold defaultstate="collapsed" desc="Overrides (Note).">
     @Override
-    public int getPlayedKey() {
-        return (getValue()-90)/2;
+    public String getPlayedKey() {
+        return Note.noteKeyFromValue(this.getValue());
     }
     
     @Override

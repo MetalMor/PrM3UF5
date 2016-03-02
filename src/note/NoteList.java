@@ -20,7 +20,7 @@ public class NoteList<T> extends ArrayList {
     /**
      * Array d'objectes genèrics.
      */
-    private T[] llista;
+    private T[] list;
     //</editor-fold>
 
     // MÈTODES
@@ -38,8 +38,7 @@ public class NoteList<T> extends ArrayList {
     /**
      * Constructor sense arguments.
      */
-    public NoteList() {
-    }
+    public NoteList() { }
 
     /**
      * Constructor a partir d'una colecció predefinida.
@@ -57,8 +56,8 @@ public class NoteList<T> extends ArrayList {
      *
      * @return Llista d'elements genèrics.
      */
-    public T[] getListaNotas() {
-        return llista;
+    public T[] getList() {
+        return list;
     }
     
     /**
@@ -66,8 +65,8 @@ public class NoteList<T> extends ArrayList {
      *
      * @param llista Llista d'elements genèrics.
      */
-    public void setListaNotas(T[] llista) {
-        this.llista = llista;
+    public void setList(T[] llista) {
+        this.list = llista;
     }
     //</editor-fold>
 

@@ -25,34 +25,23 @@ public class ApplicationConstants {
      * Títol de la finestra del programa.
      */
     public static final String TITLE = "BANANA FXylophone!";
+    //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="Constants de la vista.">
     /**
      * Nom del fitxer que guarda la vista.
      */
-    public static final String VIEW_FILE = "FXylophoneView.fxml";
+    public static final String VIEW_FILE = "view/FXylophoneView.fxml";
     
     /**
      * Nom del fitxer que guarda l'animació del plàtan ballant.
      */
-    public static final String PEANUT_BUTTER_JELLY_TIME_FILE = "file:peanut-butter-jelly-time.gif";
+    public static final String PEANUT_BUTTER_JELLY_TIME_FILE = "file:view/peanut-butter-jelly-time.gif";
     
     /**
      * Nom del fitxer que guarda la icona de la barra de tasques/finestra.
      */
-    public static final String ICON_FILE = "icon.png";
-    
-    /**
-     * Missatge mostrat quan l'aplicació està preparada per funcionar.
-     */
-    public static final String READY_MESSAGE = "Aplicació preparada.";
-    
-    public static final String RECORDING_MESSAGE = "Inici de la gravació.";
-    
-    public static final String STOP_RECORDING_MESSAGE = "Fi de la gravació.";
-    
-    public static final String PLAYING_MESSAGE = "Inici de la reproducció.";
-    
-    public static final String END_PLAYING_MESSAGE = "Fi de la reproducció.";
+    public static final String ICON_FILE = "view/icon.gif";
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Constants per a l'ús de fitxers XML.">
@@ -95,7 +84,40 @@ public class ApplicationConstants {
     public static final String TIMESTAMP_ELEMENT = "Timestamp";
     //</editor-fold>
     
-    //<editor-fold defaultstate="collapsed" desc="Misc.">
+    //<editor-fold defaultstate="collapsed" desc="Missatges als camps de text.">
+    /**
+     * Missatge mostrat quan l'aplicació està preparada per funcionar.
+     */
+    public static final String READY_MESSAGE = "Aplicació preparada.";
+    
+    /**
+     * Missatge mostrat quan l'aplicació ha començat a gravar notes.
+     */
+    public static final String RECORDING_MESSAGE = "Inici de la gravació.";
+    
+    /**
+     * Missatge mostrat quan l'aplicació ha acabat de gravar notes.
+     */
+    public static final String STOP_RECORDING_MESSAGE = "Fi de la gravació.";
+    
+    /**
+     * Missatge mostrat quan l'aplicació ha començat a reproduir notes.
+     */
+    public static final String PLAYING_MESSAGE = "Inici de la reproducció.";
+    
+    /**
+     * Missatge mostrat quan l'aplicació ha acabat de reproduir notes..
+     */
+    public static final String END_PLAYING_MESSAGE = "Fi de la reproducció.";
+    
+    /**
+     * Text per mostrar al TextField a on introduir el nom del fitxer XML per
+     * guardar cadascun dels objectes Note.
+     */
+    public static final String TF_FILE_PROMPT = "Fitxer...";
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Valors útils per al tractament d'objectes Note.">
     /**
      * Volum de les notes.
      */
@@ -105,12 +127,6 @@ public class ApplicationConstants {
      * To mínim per defecte de les notes.
      */
     public static final int DEF_NOTE_VALUE = 90;
-    
-    /**
-     * Text per mostrar al TextField a on introduir el nom del fitxer XML per
-     * guardar cadascun dels objectes Note.
-     */
-    public static final String TF_FILE_PROMPT = "Fitxer...";
     
     /**
      * Valor enter del canal de MIDI que reproduirà el so.

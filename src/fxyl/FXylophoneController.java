@@ -287,8 +287,9 @@ public class FXylophoneController implements Initializable {
                     } catch (KeyErrorException keEx) {
                         getShowStateTf().setText(keEx.getError());
                         setKey(ApplicationConstants.DEF_NOTE_VALUE);
+                    } finally {
+                        playNote();
                     }
-                    playNote();
                 }
                 
             });
@@ -347,15 +348,19 @@ public class FXylophoneController implements Initializable {
             public void handle(MouseEvent me) {
                 
                 if (!isPlaying()) {
+                    showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
                     setPlaying(true);
                     setWait(0);
                     try {
-                        setFileNameFromTF();
+                        setFileNameFromTf();
                     } catch (InvalidFileNameException ifnEx) {
+                        showInfo(ifnEx.getError(), getShowStateTf());
                         xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
+                    } finally {
+                        playNotesFromXMLList();
+                        setPlaying(false);
+                        showInfo(ApplicationConstants.END_PLAYING_MESSAGE, getShowStateTf());
                     }
-                    playNotesFromXMLList();
-                    setPlaying(false);
                 }
                 
             }
@@ -374,7 +379,7 @@ public class FXylophoneController implements Initializable {
      */
     private void switchRecordControl(boolean recording) {
         
-        this.recordControl = new Circle();
+        this.recordControl = getRecordControl();
         
         if (recording)
             recordControl.setFill(Color.RED);
@@ -394,7 +399,7 @@ public class FXylophoneController implements Initializable {
      * Funció per especificar el nom del fitxer XML a on es guardaran els
      * objectes Note. Els formata adequadament
      */
-    private void setFileNameFromTF() throws InvalidFileNameException {
+    private void setFileNameFromTf() throws InvalidFileNameException {
         
         String fileName = getFileNameTf().getText();
         
@@ -444,7 +449,7 @@ public class FXylophoneController implements Initializable {
             noteList.add(n);
         }
         
-        sound(n.getValue());
+        sound(n);
         setKey(0);
         
     }
@@ -459,14 +464,18 @@ public class FXylophoneController implements Initializable {
             showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
             NoteList<Note> noteList = (NoteList<Note>) xmlNoteRecorder.XMLtoNotes();
             setNoteList(noteList);
-            for (Note note : getNoteList())
-                playRecordedNote(note);
+            setFileNameFromTf();
         } catch (WrongNoteException wnEx) {
             showInfo(wnEx.getError(), getShowStateTf());
+        } catch (InvalidFileNameException ifnEx) {
+            showInfo(ifnEx.getError(), getShowStateTf());
+            xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             showInfo(ApplicationConstants.END_PLAYING_MESSAGE, getShowStateTf());
+            for (Note note : getNoteList())
+                playRecordedNote(note);
         }
     }
     
@@ -477,11 +486,10 @@ public class FXylophoneController implements Initializable {
     private void noteSaving() {
         setRecording(false);
         try {
-            setFileNameFromTF();
             xmlNoteRecorder.setNoteRecording(noteList);
-            xmlNoteRecorder.notesToXML();
+            setFileNameFromTf();
         } catch (InvalidFileNameException ifnEx) {
-            System.out.println(ifnEx.getMessage());
+            showInfo(ifnEx.getError(), getShowStateTf());
             xmlNoteRecorder.setFileName(ApplicationConstants.DEFAULT_FILENAME);
             try {
                 xmlNoteRecorder.notesToXML();
@@ -490,10 +498,15 @@ public class FXylophoneController implements Initializable {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        } catch (WrongNoteException wnEx) {
-            showInfo(wnEx.getError(), getShowStateTf());
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                xmlNoteRecorder.notesToXML();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+           
         }
     }
     
@@ -510,11 +523,11 @@ public class FXylophoneController implements Initializable {
             // espera el temps necessari des de l'última nota per reproduïr la següent
             long playedTime = recdNote.getTimestamp() + 1;
             long timeSleep = playedTime - getWait();
-            int noteValue = recdNote.getValue();
+            //int noteValue = recdNote.getValue();
             
             Thread.sleep(timeSleep);
             
-            sound(noteValue);
+            sound(recdNote);
             setWait(playedTime);
             
         } catch (InterruptedException ex) {
@@ -526,11 +539,12 @@ public class FXylophoneController implements Initializable {
      * Funció que s'encarrega  de cridar la funció reproductora de notes. També
      * printa el nom de la nota al seu TextField corresponent.
      */
-    private void sound(int value){
+    private void sound(Note note){
     
          mc[ApplicationConstants.MIDICHANNEL]
-                 .noteOn(value, ApplicationConstants.DEF_NOTE_VOLUME);
+                 .noteOn(note.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
          // TODO textfield 
+         showInfo(note.getPlayedKey(), getShowPlayedNoteTF());
     
     }
     

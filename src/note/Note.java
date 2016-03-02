@@ -99,7 +99,7 @@ public abstract class Note implements Comparable {
      * @return Valor int de la tecla premuda al teclat, associada amb la nota
      * en qüestió.
      */
-    public abstract int getPlayedKey();
+    public abstract String getPlayedKey();
     
     /**
      * Funció per obtenir el moment en milisegons de la reproducció d'una nota.
