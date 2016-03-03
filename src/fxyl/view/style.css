@@ -7,6 +7,10 @@ Label {
     -fx-font-family: AR CENA;
 }
 
+Label#title {
+    -fx-text-fill: WHITE;
+}
+
 Rectangle {
     -fx-arc-height: 5.0;
     -fx-arc-width: 5.0;

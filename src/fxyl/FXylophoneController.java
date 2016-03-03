@@ -33,7 +33,8 @@ import note.NoteList;
 /**
  * Classe controladora del xilòfon.
  * Realitza les tasques relacionades amb la comunicació amb l'usuari per al
- * tractament d'objectes de classe Note.
+ * tractament d'objectes de classe Note, així com el control dels diferents
+ * aspectes de l'aplicació.
  *
  * @version 260116
  * @author mor
@@ -192,7 +193,7 @@ public class FXylophoneController implements Initializable {
     @FXML private TextField showPlayedNoteTF;
     //</editor-fold>
     
-//     MÈTODES
+    // MÈTODES
     
     //<editor-fold defaultstate="collapsed" desc="Inicialització del controlador i la interfície de l'usuari.">
     /**

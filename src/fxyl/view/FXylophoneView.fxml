@@ -98,7 +98,7 @@
     <Circle layoutX="490.0" layoutY="223.0" radius="8.125" />
     <Accordion layoutX="384.0" layoutY="162.0" />
     <Label layoutX="542.0" layoutY="171.0" text="" />
-    <Label layoutX="300.0" layoutY="18.0" prefWidth="300.0" text="BANANA FXylophone!">
+    <Label id="title" layoutX="300.0" layoutY="18.0" prefWidth="300.0" text="BANANA FXylophone!">
       <font>
         <Font name="AR CENA" size="26.0" fx:id="x1" />
       </font>
