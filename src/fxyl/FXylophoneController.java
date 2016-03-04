@@ -129,7 +129,7 @@ public class FXylophoneController implements Initializable {
      * Estructura de dades a on guardar els objectes <code>Note</code>, preparats per ser
      * inserits a un fitxer XML.
      */
-    private static NoteList<Note> noteList;
+    private NoteList<Note> noteList;
     /**
      * Propietat que guarda temporalment el valor de la nota per reproduir-la.
      */
@@ -344,6 +344,7 @@ public class FXylophoneController implements Initializable {
                 if (!isPlaying()) {
                     showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
                     setPlaying(true);
+                    setNoteList(new NoteList<Note>());
                     setWait(0);
                     try {
                         setFileNameFromTf();
@@ -462,8 +463,8 @@ public class FXylophoneController implements Initializable {
     private void playNotesFromXMLList() {
         try {
             showInfo(ApplicationConstants.PLAYING_MESSAGE, getShowStateTf());
-            NoteList<Note> noteList = (NoteList<Note>) getXmlNoteRecorder().XMLtoNotes();
-            setNoteList(noteList);
+            NoteList<Note> noteXmlList = (NoteList<Note>) getXmlNoteRecorder().XMLtoNotes();
+            setNoteList(noteXmlList);
             setFileNameFromTf();
         } catch (WrongNoteException wnEx) {
             showInfo(wnEx.getError(), getShowStateTf());
@@ -541,6 +542,8 @@ public class FXylophoneController implements Initializable {
      */
     private void sound(Note note){
     
+        
+        System.out.println(note);
          getMc(ApplicationConstants.MIDICHANNEL)
                  .noteOn(note.getValue(), ApplicationConstants.DEF_NOTE_VOLUME);
          showInfo(note.toString(), getShowPlayedNoteTF());
@@ -785,7 +788,7 @@ public class FXylophoneController implements Initializable {
      * la classe Note.
      */
     public void setNoteList(NoteList<Note> noteRecording) {
-        FXylophoneController.noteList = noteRecording;
+        noteList = noteRecording;
     }
     
     /**

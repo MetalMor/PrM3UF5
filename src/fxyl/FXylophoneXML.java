@@ -153,8 +153,6 @@ public class FXylophoneXML {
      */
     public boolean recordNote(Note n) {
 
-        System.out.println("XMLtoNote");
-        System.out.println(n);
         if(!noteList.add(n))
             return false;
 
@@ -186,6 +184,8 @@ public class FXylophoneXML {
 
         NodeList nodes = doc.getElementsByTagName(ApplicationConstants.NOTE_ELEMENT);
 
+        noteList = new NoteList<Note>();
+        
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
 
@@ -204,9 +204,6 @@ public class FXylophoneXML {
         }
 
         noteList.sort(nc);
-
-        for (Note note : noteList)
-            System.out.println(note);
 
         return noteList;
 
